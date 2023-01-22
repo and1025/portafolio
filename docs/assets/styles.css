@@ -1,0 +1,32 @@
+main {
+	margin-left: 25px;
+}
+
+form {
+	width:50%;
+	margin-left: 25%;
+}
+
+.logo {
+	height: 50px;
+	margin-left: 20px;
+	margin-right: 20px;
+	border-radius: 50%;
+}
+
+input.ng-invalid, select.ng-invalid {
+  border-left: 5px solid #a94442;
+}
+
+input.ng-valid, select.ng-valid {
+  border-left: 5px solid #42A948;
+}
+
+.form2 {
+	width: 90% !important;
+	margin-left: 5% !important;
+}
+
+.formInput {	
+	margin-right:  20px;
+}
