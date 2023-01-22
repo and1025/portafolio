@@ -14,20 +14,20 @@ export class ReactiveFormComponent implements OnInit {
   submittedModel: Hero; 
   powers: string[];
   submitted: boolean = false;
+  localidad:string = 'none';
   
   constructor(private formBuilder: FormBuilder) { }
   
   ngOnInit() {
-      this.model = new Hero(18, 'Dr IQ', 'Really Smart', 'Chuck Overstreet', 'iq@superhero.com');
+      this.model = new Hero(18, 'Dr IQ', 'Really Smart', 'Chuck Overstreet', );
       
       this.powers = ['Really Smart', 'Super Flexible', 
                      'Hypersound', 'Weather Changer'];                     
                      
       this.heroForm = this.formBuilder.group({
-        name:     [this.model.name, Validators.required],
-        alterEgo: [this.model.alterEgo, Validators.required],
-        email:    [this.model.email, [Validators.required, ValidationService.emailValidator]],
-        power:    [this.model.power, Validators.required]
+        nombre:     [this.model.nombre, Validators.required],
+        altDireccionerEgo: [this.model.Direccion, Validators.required],        
+        barrio:    [this.model.barrio, Validators.required]
       });
   }
 

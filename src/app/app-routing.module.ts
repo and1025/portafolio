@@ -11,7 +11,7 @@ import { ControlValueAccessorComponent } from './controlValueAccessor/controlVal
 import { ReactiveDynamicFormComponent } from './reactiveDynamicForm/reactive-dynamic-form.component';
 
 const routes: Routes = [
-  { path: '', pathMatch:'full', redirectTo: '/startertemplateform' },
+  { path: '', pathMatch:'full', redirectTo: '/reactivedynamicform' },
   { path: 'startertemplateform', component: StarterTemplateFormComponent    },
   { path: 'starterreactiveform', component: StarterReactiveFormComponent },
   { path: 'basicform',  component: BasicFormComponent },

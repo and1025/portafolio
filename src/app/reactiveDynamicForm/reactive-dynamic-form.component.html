@@ -1,14 +1,68 @@
 <div *ngIf="!submitted">
-    <form [formGroup]="heroForm" (ngSubmit)="submit()">
-        <div *ngFor="let prop of formModelProps">
+    <form style="width: 80%; margin-left: 10%;" [formGroup]="heroForm" (ngSubmit)="submit()">
+        <div *ngFor="let prop of formModelProps">            
             <div class="form-group" *ngIf="prop !== 'id'">
                 <label for="name">{{ prop | cameltotitle }}</label>
-                <input type="text" class="form-control" [formControlName]="prop" />
-                <div class="alert alert-danger" [hidden]="heroForm.get(prop).valid">{{ prop }} is required</div>
-            </div>
+                <input *ngIf="prop != 'grupoSanguineo'" type="text" class="form-control" [formControlName]="prop" />
+                <label for="">{{prop}}</label>
+                <div class="alert alert-danger" [hidden]="heroForm.get(prop).valid">{{ prop }} es requerido</div>                
+            </div>            
         </div>
-        <button type="submit" class="btn btn-default" [disabled]="!heroForm.valid">Submit</button> 
     </form>
+    <form #formRef="ngForm" class="form2">
+        <label for="name">Núcleo Familiar</label>
+        <div *ngFor="let word2 of words2; let in=index">            
+            <div class="form-group" style="display:inline-flex; width: 100%;">                
+              <input type="text" style="width: 96%;" [(ngModel)]="words2[in].value1" placeholder="nombre" name="name{{in}}" class="form-control formInput" #name="ngModel" required />
+              <input type="text" style="width: 96%;" [(ngModel)]="words2[in].value2" placeholder="teléfono" name="name{{in}}" class="form-control formInput" #name="ngModel" required />
+              <select style="width: 50%;" class="form-control formInput" [(ngModel)]="grupoSang2" name="Grupo Sanguineo" id="">
+                <option value="none">Grupo Sanguineo</option>                                
+                <option value="1">A +</option>
+                <option value="2">A -</option>
+                <option value="3">B +</option>
+                <option value="4">B -</option>
+                <option value="5">AB +</option>
+                <option value="6">AB -</option>
+                <option value="7">O +</option>
+                <option value="8">O -</option>
+              </select>              
+              <input type="text" style="width: 96%;" [(ngModel)]="words2[in].value4" placeholder="Profesión" name="Profesion" class="form-control formInput" #name="ngModel" required />              
+              <!--<p [hidden]="words2[in].value">Field is required</p>
+              {{formRef.form.name1}}-->
+            </div>
+            <br />
+        </div>
+        <div style="display: flex; justify-content: center;">
+            <button [disabled]="!formRef.form.valid" (click)="add()">Agregar Persona</button>
+        </div>
+    </form>
+
+    <label style="width: 80%; margin-left: 10%;"> Localidad </label>
+    <select style="width: 80%; margin-left: 10%;" class="form-control formInput" [(ngModel)]="localidad" name="Localidad" id="">        
+        <option value="1">Usaquén</option>
+        <option value="2">Chapinero</option>        
+        <option value="3">Santa Fe</option>Santa Fe
+        <option value="4">San Cristóbal</option>
+        <option value="5">Usme</option>
+        <option value="6">Tunjuelito</option>
+        <option value="7">Bosa</option>
+        <option value="8">Kennedy</option>
+        <option value="9">Fontibón</option>
+        <option value="10">Engativá</option>
+        <option value="11">Suba</option>
+        <option value="12">Barrios Unidos</option>
+        <option value="13">Teusaquillo</option>
+        <option value="14">Los Mártires</option>
+        <option value="15">Antonio Nariño</option>
+        <option value="16">Puente Aranda</option>
+        <option value="17">Candelaria</option>
+        <option value="18">Rafael Uribe Uribe</option>
+        <option value="19">Ciudad Bolívar</option>
+        <option value="20">Sumapaz</option>
+    </select>    
+</div>
+<div style="display: flex; justify-content: center; margin-top: 3%;">
+    <button type="submit" (click)="submit()" class="btn btn-default" [disabled]="!heroForm.valid">Guardar Formulario</button> 
 </div>
 
 <div *ngIf="submitted">
@@ -18,7 +72,9 @@
             <div class="col-md-2">{{ prop | cameltotitle }}</div>
             <div class="col-md-10 pull-left">{{ heroForm.get(prop).value }}</div>
         </div>
-    </div>
+    </div>    
     <br />
     <button class="btn btn-default" (click)="submitted=false">Edit</button>
+    <button class="btn btn-default" (click)="submitAll()">Enviar</button>
 </div>
+

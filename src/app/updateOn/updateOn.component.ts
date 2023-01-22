@@ -18,7 +18,7 @@ export class UpdateOnComponent implements OnInit {
     constructor(private formBuilder: FormBuilder) { }
     
     ngOnInit() {
-        this.model = new Hero(18, 'Dr IQ', 'Really Smart', 'Chuck Overstreet', 'iq@superhero.com');
+        this.model = new Hero(18, 'Dr IQ', 'Really Smart', 'Chuck Overstreet');
   
         this.powers = ['Really Smart', 'Turbulent Breeze', 
                        'Super Hot', 'Weather Changer'];
@@ -37,10 +37,9 @@ export class UpdateOnComponent implements OnInit {
         this.heroForm = new FormGroup({
             //Can individually add updateOn to FormControls
             //name:   new FormControl(this.model.name, { validators: Validators.required, updateOn: 'blur' }),
-            name:     new FormControl(this.model.name, Validators.required ),
-            alterEgo: new FormControl(this.model.alterEgo, Validators.required),
-            email:    new FormControl(this.model.email, { validators: [Validators.required, ValidationService.emailValidator] }),
-            power:    new FormControl(this.model.power, Validators.required)
+            name:     new FormControl(this.model.nombre, Validators.required ),
+            alterEgo: new FormControl(this.model.Direccion, Validators.required),
+            email:    new FormControl(this.model.barrio, { validators: [Validators.required] }),            
         }, { updateOn: 'blur' });
     }
 

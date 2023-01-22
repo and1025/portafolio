@@ -13,13 +13,12 @@ export class ReactiveDynamicFormComponent implements OnInit {
     model: Hero;
     heroForm: FormGroup;
     formModelProps = [];
-    submitted: boolean;
+    submitted: boolean; 
 
     constructor() { }
 
     ngOnInit() { 
-        this.model = new Hero(18, 'Dr IQ', 'Really Smart', 'Chuck Overstreet', 'iq@superhero.com');
-
+        this.model = new Hero(0, '', '', '', );
         const formModel = {};
         let validators = [ Validators.required ];
         for (const prop of Object.keys(this.model)) {
@@ -31,7 +30,14 @@ export class ReactiveDynamicFormComponent implements OnInit {
     }
 
     submit() {
-        this.submitted = true;
+        console.log(this.formModelProps);
+        //this.submitted = true;
+    }
+
+    words2 = [{value: '', value2: '', value3:'', value4:''}];
+  
+    add() {
+      this.words2.push({value: '', value2: '', value3:'', value4:''});      
     }
 
 }
