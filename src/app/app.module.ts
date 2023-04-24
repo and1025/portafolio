@@ -15,4 +15,4 @@ import { CamelToTitlePipe } from './shared/camel-to-title.pipe';
 })
 export class AppModule { }
 
-export class AppModuleTarea1 { }
+export class AppModuleTarea1 { System.out.println("tarea 1 "); }
