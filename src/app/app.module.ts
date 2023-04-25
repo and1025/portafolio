@@ -14,3 +14,5 @@ import { CamelToTitlePipe } from './shared/camel-to-title.pipe';
   bootstrap:    [ AppComponent ]
 })
 export class AppModule { }
+
+export class AppModuleTarea1 { System.out.println("tarea 1 "); }
