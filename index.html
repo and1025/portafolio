@@ -159,6 +159,21 @@ nav.scrolled { box-shadow:0 4px 32px rgba(0,0,0,.4); }
 .c-ico { width:26px; height:26px; border-radius:5px; display:flex; align-items:center; justify-content:center; font-size:.8rem; flex-shrink:0; }
 .cg{background:rgba(66,133,244,.15)} .ca{background:rgba(255,170,0,.15)} .cs{background:rgba(255,107,53,.15)} .cd{background:rgba(0,255,179,.15)}
 
+/* RECOMMENDATIONS */
+.rec-bg { background:var(--bg2); }
+.rec-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:24px; }
+.rec-card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:30px; backdrop-filter:blur(12px); transition:border-color .3s,transform .3s,box-shadow .3s; display:flex; flex-direction:column; gap:18px; }
+.rec-card:hover { border-color:rgba(155,89,255,.3); box-shadow:var(--glow-p); transform:translateY(-5px); }
+.rec-quote-icon { font-size:2.8rem; line-height:1; color:var(--purple); opacity:.45; font-family:Georgia,serif; margin-bottom:-8px; }
+.rec-text { color:var(--muted); font-size:.875rem; line-height:1.85; font-style:italic; flex:1; }
+.rec-divider { height:1px; background:var(--border); }
+.rec-author { display:flex; align-items:center; gap:14px; }
+.rec-avatar { width:46px; height:46px; border-radius:50%; background:linear-gradient(135deg,var(--purple),var(--cyan)); display:flex; align-items:center; justify-content:center; font-size:1rem; font-weight:800; color:#06080f; flex-shrink:0; letter-spacing:0; }
+.rec-info .rec-name { font-size:.875rem; font-weight:700; color:var(--text); }
+.rec-info .rec-role { font-size:.75rem; color:var(--cyan); margin-top:2px; }
+.rec-info .rec-company { font-size:.72rem; color:var(--muted); margin-top:1px; }
+.rec-stars { display:flex; gap:2px; font-size:.7rem; color:var(--amber); margin-top:4px; }
+
 /* CONTACT */
 .contact-wrap { max-width:680px; margin:0 auto; text-align:center; }
 .contact-grid { display:flex; justify-content:center; flex-wrap:wrap; gap:14px; margin-top:40px; }
@@ -198,6 +213,7 @@ footer { padding:28px 0; border-top:1px solid var(--border); text-align:center; 
       <li><a href="#skills" id="nl-skills">Stack</a></li>
       <li><a href="#experience" id="nl-exp">Experiencia</a></li>
       <li><a href="#education" id="nl-edu">Formación</a></li>
+      <li><a href="#recommendations" id="nl-rec">Recomendaciones</a></li>
       <li><a href="#contact" id="nl-contact" class="nav-cta">Contacto</a></li>
       <li><button class="lang-btn" id="lang-btn" onclick="toggleLang()">EN</button></li>
     </ul>
@@ -212,6 +228,7 @@ footer { padding:28px 0; border-top:1px solid var(--border); text-align:center; 
   <a href="#skills" onclick="closeMob()">Stack</a>
   <a href="#experience" id="ml-exp" onclick="closeMob()">Experiencia</a>
   <a href="#education" id="ml-edu" onclick="closeMob()">Formación</a>
+  <a href="#recommendations" id="ml-rec" onclick="closeMob()">Recomendaciones</a>
   <a href="#contact" id="ml-contact" onclick="closeMob()">Contacto</a>
 </div>
 
@@ -512,11 +529,55 @@ footer { padding:28px 0; border-top:1px solid var(--border); text-align:center; 
   </div>
 </section>
 
+<!-- RECOMMENDATIONS -->
+<section id="recommendations" class="rec-bg">
+  <div class="wrap">
+    <div class="sec-hdr fi">
+      <span class="sec-tag" id="rec-tag">05 · Recomendaciones</span>
+      <h2 class="sec-title" id="rec-title">Cartas de <span class="hi">Recomendación</span></h2>
+      <p class="sec-sub" id="rec-sub">Respaldo de líderes y colegas con quienes he trabajado a lo largo de mi carrera.</p>
+    </div>
+    <div class="rec-grid fi">
+
+      <div class="rec-card">
+        <div class="rec-quote-icon">"</div>
+        <p class="rec-text" id="rec-t0">"Es un placer para mí recomendar a Andrés Fornaris, con quien tuve el privilegio de trabajar durante más de 2 años. Andrés demostró ser un líder excepcional con una habilidad sobresaliente para combinar un profundo conocimiento técnico con habilidades interpersonales que fortalecen cualquier equipo de trabajo. Su capacidad para abordar problemas complejos y encontrar soluciones técnicas efectivas es impresionante."</p>
+        <div class="rec-divider"></div>
+        <div class="rec-author">
+          <div class="rec-avatar" id="rec-av0">SS</div>
+          <div class="rec-info">
+            <div class="rec-name" id="rec-n0">Sebastian Sanchez &nbsp;— <a href="Carta%20Recomendaci%C3%B3n%20Andres%20Fornaris.pdf" target="_blank" style="color:var(--cyan);text-decoration:none;transition:opacity .2s;font-size:.75rem;" onmouseover="this.style.opacity='.7'" onmouseout="this.style.opacity='1'">Ver carta ↗</a></div>
+            <div class="rec-role" id="rec-r0">Colega · Colaborador profesional</div>
+            <div class="rec-company" id="rec-c0">Bogotá D.C. · Mar 2026</div>
+            <div class="rec-stars">★★★★★</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="rec-card">
+        <div class="rec-quote-icon">"</div>
+        <p class="rec-text" id="rec-t1">"Es un verdadero placer recomendar a Andrés Fornaris, un profesional excepcional con quien tuve el honor de trabajar. Andrés destaca por su sólida experiencia en DevOps, infraestructura cloud (AWS, Azure y Google Cloud) y DevSecOps. Más allá de su conocimiento técnico, sobresale por su liderazgo, empatía y capacidad para colaborar eficazmente en equipo. Estoy convencido de que Andrés sería un gran aporte para cualquier organización."</p>
+        <div class="rec-divider"></div>
+        <div class="rec-author">
+          <div class="rec-avatar" id="rec-av1">CM</div>
+          <div class="rec-info">
+            <div class="rec-name" id="rec-n1">César Arturo Mejía Montero &nbsp;— <a href="CartaRecomendacionAndresFornarisCM.pdf" target="_blank" style="color:var(--cyan);text-decoration:none;transition:opacity .2s;font-size:.75rem;" onmouseover="this.style.opacity='.7'" onmouseout="this.style.opacity='1'">Ver carta ↗</a></div>
+            <div class="rec-role" id="rec-r1">Dirección de Operaciones y Estrategia DevOps</div>
+            <div class="rec-company" id="rec-c1">Enero 2025</div>
+            <div class="rec-stars">★★★★★</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 <!-- CONTACT -->
 <section id="contact">
   <div class="wrap">
     <div class="contact-wrap fi">
-      <span class="sec-tag" id="ct-tag">05 · Contacto</span>
+      <span class="sec-tag" id="ct-tag">06 · Contacto</span>
       <h2 class="sec-title" style="margin-top:8px" id="ct-title">Hablemos de tu <span class="hi">Próximo Proyecto</span></h2>
       <p class="sec-sub" style="margin-top:14px" id="ct-sub">Disponible para roles de arquitectura cloud, consultoría DevSecOps y liderazgo técnico en proyectos enterprise en LATAM y el mundo.</p>
       <div class="contact-grid">
@@ -585,7 +646,14 @@ const T = {
     'edu-d1':'Bachiller Galardonado',
     'edu-n1':'Mejor bachiller 2010. Mejor promedio ponderado ICFES sector oficial. Reconocimiento Alcaldía de Ciénaga · Student Night Talent.',
     'cert-ttl':'Certificaciones & Capacitaciones',
-    'ct-tag':'05 · Contacto','ct-title':'Hablemos de tu <span class="hi">Próximo Proyecto</span>',
+    'nl-rec':'Recomendaciones','ml-rec':'Recomendaciones',
+    'rec-tag':'05 · Recomendaciones','rec-title':'Cartas de <span class="hi">Recomendación</span>',
+    'rec-sub':'Respaldo de líderes y colegas con quienes he trabajado a lo largo de mi carrera.',
+    'rec-t0':'"Es un placer para mí recomendar a Andrés Fornaris, con quien tuve el privilegio de trabajar durante más de 2 años. Andrés demostró ser un líder excepcional con una habilidad sobresaliente para combinar un profundo conocimiento técnico con habilidades interpersonales que fortalecen cualquier equipo de trabajo."',
+    'rec-t1':'"Es un verdadero placer recomendar a Andrés Fornaris, un profesional excepcional con quien tuve el honor de trabajar. Andrés destaca por su sólida experiencia en DevOps, infraestructura cloud (AWS, Azure y Google Cloud) y DevSecOps. Estoy convencido de que Andrés sería un gran aporte para cualquier organización."',
+    'rec-r0':'Colega · Colaborador profesional','rec-r1':'Dirección de Operaciones y Estrategia DevOps',
+    'rec-c0':'Bogotá D.C. · Mar 2026','rec-c1':'Enero 2025',
+    'ct-tag':'06 · Contacto','ct-title':'Hablemos de tu <span class="hi">Próximo Proyecto</span>',
     'ct-sub':'Disponible para roles de arquitectura cloud, consultoría DevSecOps y liderazgo técnico en proyectos enterprise en LATAM y el mundo.',
     'btn-dl':'Descargar CV',
     _phrases:['AWS · GCP · Azure','Landing Zone Designer','Principal DevSecOps Engineer','Platform Engineering Leader','FinOps Optimizer','Multi-Cloud · LATAM & Global']
@@ -636,7 +704,14 @@ const T = {
     'edu-d1':'Honors Graduate',
     'edu-n1':'Best graduate 2010. Best weighted ICFES average in the public sector. Recognition from the Mayor of Ciénaga · Student Night Talent.',
     'cert-ttl':'Certifications & Training',
-    'ct-tag':'05 · Contact','ct-title':'Let\'s Talk About Your <span class="hi">Next Project</span>',
+    'nl-rec':'Recommendations','ml-rec':'Recommendations',
+    'rec-tag':'05 · Recommendations','rec-title':'Recommendation <span class="hi">Letters</span>',
+    'rec-sub':'Endorsements from leaders and colleagues I\'ve worked with throughout my career.',
+    'rec-t0':'"It is a pleasure for me to recommend Andrés Fornaris, with whom I had the privilege of working for over 2 years. Andrés proved to be an exceptional leader with an outstanding ability to combine deep technical knowledge with interpersonal skills that strengthen any team."',
+    'rec-t1':'"It is a true pleasure to recommend Andrés Fornaris, an exceptional professional I had the honor of working with. Andrés stands out for his solid experience in DevOps, cloud infrastructure (AWS, Azure and Google Cloud) and DevSecOps. I am convinced that Andrés would be a great asset to any organization."',
+    'rec-r0':'Colleague · Professional collaborator','rec-r1':'Head of Operations & DevOps Strategy',
+    'rec-c0':'Bogotá D.C. · Mar 2026','rec-c1':'January 2025',
+    'ct-tag':'06 · Contact','ct-title':'Let\'s Talk About Your <span class="hi">Next Project</span>',
     'ct-sub':'Available for cloud architecture roles, DevSecOps consulting, and technical leadership in enterprise projects across LATAM and globally.',
     'btn-dl':'Download CV',
     _phrases:['AWS · GCP · Azure','Landing Zone Designer','Principal DevSecOps Engineer','Platform Engineering Leader','FinOps Optimizer','Multi-Cloud · LATAM & Global']
