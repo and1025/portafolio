@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Andrés Fornaris | Cloud Architecture Manager & DevSecOps Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+:root {
+  --bg: #06080f; --bg2: #090c17; --cyan: #00d4ff; --purple: #9b59ff;
+  --mint: #00ffb3; --amber: #ffaa00; --text: #e2e8f0; --muted: #64748b;
+  --border: rgba(0,212,255,.1); --card: rgba(9,12,23,.85);
+  --glow-c: 0 0 24px rgba(0,212,255,.25); --glow-p: 0 0 24px rgba(155,89,255,.25);
+}
+body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); overflow-x:hidden; line-height:1.6; }
+::-webkit-scrollbar{width:5px} ::-webkit-scrollbar-track{background:var(--bg)} ::-webkit-scrollbar-thumb{background:linear-gradient(var(--cyan),var(--purple));border-radius:3px}
+#cnv { position:fixed; top:0; left:0; width:100%; height:100%; z-index:0; pointer-events:none; }
+.wrap { max-width:1160px; margin:0 auto; padding:0 24px; position:relative; z-index:1; }
+section { padding:110px 0; }
+body::before {
+  content:''; position:fixed; inset:0; z-index:0; pointer-events:none;
+  background-image: linear-gradient(rgba(0,212,255,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,.022) 1px,transparent 1px);
+  background-size:60px 60px;
+}
+
+/* NAV */
+nav { position:fixed; top:0; left:0; right:0; z-index:999; padding:14px 0; backdrop-filter:blur(24px); background:rgba(6,8,15,.8); border-bottom:1px solid var(--border); transition:box-shadow .3s; }
+nav.scrolled { box-shadow:0 4px 32px rgba(0,0,0,.4); }
+.nav-inner { display:flex; justify-content:space-between; align-items:center; max-width:1160px; margin:0 auto; padding:0 24px; }
+.logo { font-family:'JetBrains Mono',monospace; font-size:1.05rem; font-weight:600; color:var(--cyan); text-decoration:none; letter-spacing:1px; }
+.logo em { color:var(--purple); font-style:normal; }
+.nav-links { display:flex; gap:24px; list-style:none; align-items:center; }
+.nav-links a { color:var(--muted); text-decoration:none; font-size:.82rem; font-weight:500; letter-spacing:.5px; transition:color .2s; }
+.nav-links a:hover, .nav-links a.active { color:var(--cyan); }
+.nav-cta { border:1px solid var(--cyan)!important; color:var(--cyan)!important; padding:6px 16px; border-radius:6px; transition:background .2s,color .2s!important; }
+.nav-cta:hover { background:var(--cyan)!important; color:var(--bg)!important; }
+.lang-btn {
+  background:transparent; border:1px solid var(--border); color:var(--muted);
+  padding:5px 13px; border-radius:6px; font-family:'JetBrains Mono',monospace;
+  font-size:.72rem; cursor:pointer; transition:all .2s; letter-spacing:1px; font-weight:600;
+}
+.lang-btn:hover { border-color:var(--cyan); color:var(--cyan); }
+.hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; }
+.hamburger span { display:block; width:22px; height:2px; background:var(--text); border-radius:2px; transition:.3s; }
+
+/* HERO */
+.hero { min-height:100vh; display:flex; align-items:center; padding-top:80px; position:relative; }
+.hero-badge { display:inline-flex; align-items:center; gap:8px; background:rgba(0,212,255,.07); border:1px solid rgba(0,212,255,.2); border-radius:50px; padding:5px 14px; font-size:.72rem; font-family:'JetBrains Mono',monospace; color:var(--cyan); letter-spacing:1.5px; text-transform:uppercase; margin-bottom:28px; }
+.dot-pulse { width:6px; height:6px; background:var(--mint); border-radius:50%; animation:pulse 2s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(1.4)} }
+.hero-name { font-size:clamp(3.2rem,7.5vw,6rem); font-weight:900; line-height:.95; letter-spacing:-3px; margin-bottom:20px; }
+.hero-name .first { color:var(--text); display:block; }
+.hero-name .last { background:linear-gradient(125deg,var(--cyan) 0%,var(--purple) 60%,var(--mint) 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; display:block; }
+.hero-sub { font-size:clamp(.9rem,2vw,1.1rem); color:var(--muted); font-weight:400; margin-bottom:20px; max-width:580px; line-height:1.7; }
+.hero-sub strong { color:var(--text); font-weight:600; }
+.typewriter { font-family:'JetBrains Mono',monospace; font-size:1rem; color:var(--mint); margin-bottom:44px; min-height:1.5em; }
+.typewriter::after { content:'█'; font-size:.8em; animation:blink 1s step-end infinite; color:var(--cyan); margin-left:2px; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+.hero-btns { display:flex; gap:14px; flex-wrap:wrap; }
+.btn { display:inline-flex; align-items:center; gap:8px; padding:13px 30px; border-radius:8px; font-size:.875rem; font-weight:700; text-decoration:none; letter-spacing:.5px; transition:transform .25s,box-shadow .25s; cursor:pointer; border:none; }
+.btn:hover { transform:translateY(-3px); }
+.btn-grad { background:linear-gradient(135deg,var(--cyan),var(--purple)); color:#06080f; }
+.btn-grad:hover { box-shadow:0 8px 30px rgba(0,212,255,.35); }
+.btn-out { background:transparent; color:var(--text); border:1px solid rgba(255,255,255,.15); }
+.btn-out:hover { border-color:var(--cyan); color:var(--cyan); }
+.scroll-hint { position:absolute; bottom:32px; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:6px; color:var(--muted); font-size:.65rem; letter-spacing:2.5px; text-transform:uppercase; animation:bob 3s ease-in-out infinite; }
+@keyframes bob { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(-8px)} }
+.scroll-line { width:1px; height:44px; background:linear-gradient(to bottom,var(--cyan),transparent); }
+
+/* STATS */
+.stats-bar { padding:0; border-top:1px solid var(--border); border-bottom:1px solid var(--border); background:rgba(0,212,255,.025); }
+.stats-grid { display:grid; grid-template-columns:repeat(4,1fr); }
+.stat { padding:36px 24px; text-align:center; border-right:1px solid var(--border); transition:background .3s; }
+.stat:last-child { border-right:none; }
+.stat:hover { background:rgba(0,212,255,.04); }
+.stat-num { font-family:'JetBrains Mono',monospace; font-size:2.8rem; font-weight:700; background:linear-gradient(135deg,var(--cyan),var(--purple)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; display:block; line-height:1; margin-bottom:6px; }
+.stat-lbl { font-size:.72rem; color:var(--muted); text-transform:uppercase; letter-spacing:1.5px; font-weight:500; }
+
+/* SECTION HEADERS */
+.sec-hdr { text-align:center; margin-bottom:64px; }
+.sec-tag { display:inline-block; font-family:'JetBrains Mono',monospace; font-size:.68rem; color:var(--cyan); letter-spacing:3px; text-transform:uppercase; margin-bottom:10px; }
+.sec-title { font-size:clamp(1.8rem,4vw,2.8rem); font-weight:800; letter-spacing:-1px; margin-bottom:14px; }
+.sec-title .hi { background:linear-gradient(135deg,var(--cyan),var(--purple)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.sec-sub { color:var(--muted); max-width:480px; margin:0 auto; font-size:.93rem; }
+
+/* ABOUT */
+.about-grid { display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:start; }
+.about-text .sec-tag { display:block; }
+.about-title { font-size:2.2rem; font-weight:800; letter-spacing:-1px; margin-bottom:24px; }
+.about-body p { color:var(--muted); margin-bottom:14px; line-height:1.8; font-size:.94rem; }
+.about-body p strong { color:var(--text); font-weight:600; }
+.about-extra { margin-top:28px; padding:18px 20px; background:rgba(0,212,255,.04); border:1px solid var(--border); border-radius:10px; font-size:.84rem; color:var(--muted); line-height:1.8; }
+.about-extra strong { color:var(--cyan); }
+.hi-cards { display:flex; flex-direction:column; gap:14px; }
+.hi-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px 20px; display:flex; align-items:flex-start; gap:14px; backdrop-filter:blur(12px); transition:border-color .3s,transform .3s; }
+.hi-card:hover { border-color:rgba(0,212,255,.3); transform:translateX(6px); }
+.hi-ico { width:38px; height:38px; border-radius:8px; background:rgba(0,212,255,.08); display:flex; align-items:center; justify-content:center; font-size:1.1rem; flex-shrink:0; }
+.hi-card h4 { font-size:.85rem; font-weight:700; margin-bottom:3px; color:var(--text); }
+.hi-card p { font-size:.77rem; color:var(--muted); line-height:1.5; }
+
+/* SKILLS */
+.skills-bg { background:var(--bg2); }
+.skills-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(270px,1fr)); gap:20px; }
+.sk-cat { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:26px; backdrop-filter:blur(12px); transition:border-color .3s,transform .3s,box-shadow .3s; }
+.sk-cat:hover { border-color:rgba(0,212,255,.28); box-shadow:var(--glow-c); transform:translateY(-5px); }
+.sk-hdr { display:flex; align-items:center; gap:12px; margin-bottom:18px; }
+.sk-ico { width:36px; height:36px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:1.1rem; }
+.sk-name { font-size:.78rem; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; }
+.tags { display:flex; flex-wrap:wrap; gap:7px; }
+.tag { padding:4px 11px; border-radius:20px; font-size:.7rem; font-family:'JetBrains Mono',monospace; font-weight:500; border:1px solid; letter-spacing:.3px; transition:transform .15s; cursor:default; }
+.tag:hover { transform:scale(1.08); }
+.tc { border-color:rgba(0,212,255,.35); color:var(--cyan); background:rgba(0,212,255,.06); }
+.tp { border-color:rgba(155,89,255,.35); color:var(--purple); background:rgba(155,89,255,.06); }
+.tm { border-color:rgba(0,255,179,.35); color:var(--mint); background:rgba(0,255,179,.06); }
+.ta { border-color:rgba(255,170,0,.35); color:var(--amber); background:rgba(255,170,0,.06); }
+.to { border-color:rgba(255,107,53,.35); color:#ff6b35; background:rgba(255,107,53,.06); }
+
+/* EXPERIENCE */
+.timeline { position:relative; padding-left:28px; }
+.timeline::before { content:''; position:absolute; left:0; top:0; bottom:0; width:2px; background:linear-gradient(to bottom,var(--cyan) 0%,var(--purple) 60%,transparent 100%); }
+.t-item { position:relative; margin-bottom:44px; opacity:0; transform:translateX(-16px); transition:opacity .55s,transform .55s; }
+.t-item.vis { opacity:1; transform:translateX(0); }
+.t-dot { position:absolute; left:-35px; top:10px; width:12px; height:12px; border-radius:50%; border:2px solid var(--bg); }
+.dc { background:var(--cyan); box-shadow:0 0 10px rgba(0,212,255,.6); }
+.dp { background:var(--purple); box-shadow:0 0 10px rgba(155,89,255,.6); }
+.dm { background:var(--mint); box-shadow:0 0 10px rgba(0,255,179,.6); }
+.da { background:var(--amber); box-shadow:0 0 10px rgba(255,170,0,.6); }
+.exp-card { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:26px 30px; backdrop-filter:blur(12px); transition:border-color .3s,box-shadow .3s; }
+.exp-card:hover { border-color:rgba(0,212,255,.28); box-shadow:var(--glow-c); }
+.exp-top { display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:10px; margin-bottom:4px; }
+.exp-role { font-size:1.05rem; font-weight:700; color:var(--text); }
+.exp-period { font-family:'JetBrains Mono',monospace; font-size:.7rem; color:var(--cyan); background:rgba(0,212,255,.08); border:1px solid rgba(0,212,255,.2); padding:3px 11px; border-radius:20px; white-space:nowrap; }
+.exp-company { font-size:.85rem; font-weight:600; color:var(--purple); margin-bottom:12px; }
+.exp-desc { color:var(--muted); font-size:.855rem; line-height:1.75; margin-bottom:14px; }
+.exp-ul { list-style:none; margin-bottom:14px; }
+.exp-ul li { color:var(--muted); font-size:.825rem; line-height:1.6; padding-left:16px; position:relative; margin-bottom:5px; }
+.exp-ul li::before { content:'▸'; position:absolute; left:0; color:var(--cyan); font-size:.7rem; top:2px; }
+.exp-tech { display:flex; flex-wrap:wrap; gap:6px; }
+.tbadge { font-family:'JetBrains Mono',monospace; font-size:.66rem; padding:3px 9px; border-radius:4px; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.07); color:var(--muted); }
+
+/* EDUCATION */
+.edu-bg { background:var(--bg2); }
+.edu-top { display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-bottom:40px; }
+.edu-card { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:26px; backdrop-filter:blur(12px); transition:border-color .3s,transform .3s,box-shadow .3s; }
+.edu-card:hover { border-color:rgba(155,89,255,.3); box-shadow:var(--glow-p); transform:translateY(-5px); }
+.edu-ico { width:46px; height:46px; border-radius:11px; background:linear-gradient(135deg,var(--purple),var(--cyan)); display:flex; align-items:center; justify-content:center; font-size:1.3rem; margin-bottom:14px; }
+.edu-deg { font-size:.95rem; font-weight:700; color:var(--text); margin-bottom:2px; }
+.edu-inst { font-size:.82rem; color:var(--cyan); font-weight:600; margin-bottom:2px; }
+.edu-yr { font-size:.75rem; color:var(--muted); font-family:'JetBrains Mono',monospace; }
+.edu-note { margin-top:10px; font-size:.78rem; color:var(--muted); line-height:1.5; }
+.certs-title { font-size:.68rem; font-family:'JetBrains Mono',monospace; color:var(--cyan); letter-spacing:3px; text-transform:uppercase; margin-bottom:16px; }
+.certs-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:10px; }
+.cert { background:var(--card); border:1px solid var(--border); border-radius:9px; padding:12px 16px; display:flex; align-items:center; gap:10px; font-size:.79rem; color:var(--text); backdrop-filter:blur(10px); transition:border-color .25s,transform .25s; }
+.cert:hover { border-color:rgba(0,212,255,.25); transform:translateX(4px); }
+.c-ico { width:26px; height:26px; border-radius:5px; display:flex; align-items:center; justify-content:center; font-size:.8rem; flex-shrink:0; }
+.cg{background:rgba(66,133,244,.15)} .ca{background:rgba(255,170,0,.15)} .cs{background:rgba(255,107,53,.15)} .cd{background:rgba(0,255,179,.15)}
+
+/* CONTACT */
+.contact-wrap { max-width:680px; margin:0 auto; text-align:center; }
+.contact-grid { display:flex; justify-content:center; flex-wrap:wrap; gap:14px; margin-top:40px; }
+.c-link { display:flex; align-items:center; gap:10px; background:var(--card); border:1px solid var(--border); border-radius:11px; padding:15px 26px; color:var(--text); text-decoration:none; font-size:.875rem; font-weight:500; transition:border-color .3s,color .3s,transform .3s,box-shadow .3s; backdrop-filter:blur(12px); }
+.c-link:hover { border-color:var(--cyan); color:var(--cyan); transform:translateY(-4px); box-shadow:var(--glow-c); }
+
+/* FOOTER */
+footer { padding:28px 0; border-top:1px solid var(--border); text-align:center; }
+.foot-txt { color:var(--muted); font-size:.75rem; font-family:'JetBrains Mono',monospace; }
+.foot-txt .ac { color:var(--cyan); }
+
+/* ANIMATIONS */
+.fi { opacity:0; transform:translateY(24px); transition:opacity .6s,transform .6s; }
+.fi.vis { opacity:1; transform:translateY(0); }
+
+/* MOBILE NAV */
+.mob-nav { display:none; position:fixed; top:56px; left:0; right:0; background:rgba(6,8,15,.97); border-bottom:1px solid var(--border); padding:16px 24px; flex-direction:column; gap:14px; z-index:998; }
+.mob-nav a { color:var(--muted); text-decoration:none; font-size:.9rem; font-weight:500; padding:4px 0; }
+.mob-nav a:hover { color:var(--cyan); }
+.mob-nav.open { display:flex; }
+
+/* RESPONSIVE */
+@media(max-width:900px) { .about-grid{grid-template-columns:1fr;gap:36px} .edu-top{grid-template-columns:1fr} }
+@media(max-width:768px) { .stats-grid{grid-template-columns:1fr 1fr} .nav-links{display:none} .hamburger{display:flex} section{padding:72px 0} }
+@media(max-width:500px) { .hero-btns{flex-direction:column} .hero-name{letter-spacing:-2px} }
+</style>
+</head>
+<body>
+<canvas id="cnv"></canvas>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="#" class="logo">AF<em>.</em>cloud</a>
+    <ul class="nav-links">
+      <li><a href="#about" id="nl-about">Perfil</a></li>
+      <li><a href="#skills" id="nl-skills">Stack</a></li>
+      <li><a href="#experience" id="nl-exp">Experiencia</a></li>
+      <li><a href="#education" id="nl-edu">Formación</a></li>
+      <li><a href="#contact" id="nl-contact" class="nav-cta">Contacto</a></li>
+      <li><button class="lang-btn" id="lang-btn" onclick="toggleLang()">EN</button></li>
+    </ul>
+    <div style="display:flex;align-items:center;gap:10px">
+      <button class="lang-btn" id="lang-btn-mob" onclick="toggleLang()" style="display:none">EN</button>
+      <div class="hamburger" onclick="toggleMob()"><span></span><span></span><span></span></div>
+    </div>
+  </div>
+</nav>
+<div class="mob-nav" id="mobNav">
+  <a href="#about" id="ml-about" onclick="closeMob()">Perfil</a>
+  <a href="#skills" onclick="closeMob()">Stack</a>
+  <a href="#experience" id="ml-exp" onclick="closeMob()">Experiencia</a>
+  <a href="#education" id="ml-edu" onclick="closeMob()">Formación</a>
+  <a href="#contact" id="ml-contact" onclick="closeMob()">Contacto</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-badge"><span class="dot-pulse"></span><span id="hero-badge">Disponible · Open to Work</span></div>
+    <h1 class="hero-name">
+      <span class="first">Andrés</span>
+      <span class="last">Fornaris</span>
+    </h1>
+    <p class="hero-sub" id="hero-sub">
+      <strong>Cloud Architecture Manager</strong> · Principal DevSecOps Engineer<br>
+      Multi-Cloud Strategist · Platform Engineering Leader
+    </p>
+    <div class="typewriter" id="tw"></div>
+    <div class="hero-btns">
+      <a href="#experience" class="btn btn-grad" id="btn-exp">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <span id="btn-exp-txt">Ver Experiencia</span>
+      </a>
+      <a href="Andres_Fornaris_CV_Spanish.docx.pdf" download class="btn btn-out" id="dl-hero">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        <span id="btn-cv-txt">Descargar CV</span>
+      </a>
+      <a href="#contact" class="btn btn-out" id="btn-cta-txt">Contactar</a>
+    </div>
+  </div>
+  <div class="scroll-hint"><div class="scroll-line"></div><span id="scroll-lbl">scroll</span></div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="wrap">
+    <div class="stats-grid">
+      <div class="stat fi"><span class="stat-num" data-target="10" data-suffix="+">0</span><span class="stat-lbl" id="sl-0">Años de Experiencia</span></div>
+      <div class="stat fi"><span class="stat-num" data-target="78">0</span><span class="stat-lbl" id="sl-1">Apps Migradas</span></div>
+      <div class="stat fi"><span class="stat-num" data-target="22">0</span><span class="stat-lbl" id="sl-2">Arquitectos Liderados</span></div>
+      <div class="stat fi"><span class="stat-num" data-target="3">0</span><span class="stat-lbl" id="sl-3">Nubes Dominadas</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="about-text fi">
+        <span class="sec-tag" id="about-tag">01 · Perfil</span>
+        <h2 class="about-title" id="about-title">Sobre <span class="hi">Mí</span></h2>
+        <div class="about-body">
+          <p id="about-p1">Ingeniero de Sistemas con <strong>más de 10 años de experiencia</strong> liderando arquitecturas cloud empresariales en entornos multi-país y multi-nube — AWS, Google Cloud y Azure.</p>
+          <p id="about-p2">Especialista en diseño de <strong>Landing Zones</strong>, gobierno cloud, DevSecOps, automatización avanzada e implementación de modelos de <strong>Platform Engineering</strong> para los sectores financiero y asegurador en LATAM.</p>
+          <p id="about-p3">He liderado equipos de hasta <strong>22 arquitectos</strong> y gestionado la migración de decenas de aplicaciones críticas, incluyendo la transición completa de Liberty Seguros a HDI Seguros.</p>
+        </div>
+        <div class="about-extra" id="about-extra">
+          🎤 <strong>Ponente en CDO Latam 2025</strong> — Inteligencia Artificial & Datos<br>
+          🌐 Inglés B1 · Español nativo<br>
+          📍 Colombia · Disponible para trabajo remoto LATAM / Global
+        </div>
+      </div>
+      <div class="hi-cards fi">
+        <div class="hi-card">
+          <div class="hi-ico">🏗️</div>
+          <div><h4 id="hi-t0">Cloud Architecture & Landing Zone</h4><p id="hi-d0">Diseño de estructuras multi-account en AWS, arquitecturas serverless, contenerizadas y multi-región con alta disponibilidad.</p></div>
+        </div>
+        <div class="hi-card">
+          <div class="hi-ico">🔐</div>
+          <div><h4 id="hi-t1">DevSecOps & Seguridad</h4><p id="hi-d1">Seguridad integrada en pipelines, WAF, GuardDuty, Security Hub, IAM con mínimo privilegio e ISO 27001.</p></div>
+        </div>
+        <div class="hi-card">
+          <div class="hi-ico">⚡</div>
+          <div><h4 id="hi-t2">Platform Engineering & CI/CD</h4><p id="hi-d2">Pipelines en Jenkins, GitHub Actions y Azure DevOps. Infrastructure as Code con Terraform y CloudFormation.</p></div>
+        </div>
+        <div class="hi-card">
+          <div class="hi-ico">📊</div>
+          <div><h4 id="hi-t3">FinOps & SRE</h4><p id="hi-d3">Optimización de costos cloud enterprise, métricas DORA, observabilidad con Dynatrace, Datadog y OpenTelemetry.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" class="skills-bg">
+  <div class="wrap">
+    <div class="sec-hdr fi">
+      <span class="sec-tag" id="sk-tag">02 · Stack Técnico</span>
+      <h2 class="sec-title" id="sk-title">Tecnologías & <span class="hi">Expertise</span></h2>
+      <p class="sec-sub" id="sk-sub">Dominio multi-nube con enfoque en seguridad, escalabilidad y gobierno enterprise</p>
+    </div>
+    <div class="skills-grid">
+      <div class="sk-cat fi">
+        <div class="sk-hdr"><div class="sk-ico" style="background:rgba(255,170,0,.12)">☁️</div><span class="sk-name" style="color:var(--amber)">Amazon Web Services</span></div>
+        <div class="tags"><span class="tag ta">ECS</span><span class="tag ta">EKS</span><span class="tag ta">Lambda</span><span class="tag ta">RDS</span><span class="tag ta">DynamoDB</span><span class="tag ta">S3</span><span class="tag ta">API Gateway</span><span class="tag ta">WAF</span><span class="tag ta">IAM</span><span class="tag ta">Control Tower</span><span class="tag ta">Security Hub</span><span class="tag ta">GuardDuty</span><span class="tag ta">CloudFront</span><span class="tag ta">Transit Gateway</span><span class="tag ta">Kinesis</span><span class="tag ta">Secrets Manager</span></div>
+      </div>
+      <div class="sk-cat fi">
+        <div class="sk-hdr"><div class="sk-ico" style="background:rgba(66,133,244,.12)">🌐</div><span class="sk-name" style="color:var(--cyan)">Google Cloud</span></div>
+        <div class="tags"><span class="tag tc">Cloud Run</span><span class="tag tc">Cloud Functions</span><span class="tag tc">GKE</span><span class="tag tc">Composer</span><span class="tag tc">BigQuery</span><span class="tag tc">VPC</span><span class="tag tc">Pub/Sub</span><span class="tag tc">IAM</span><span class="tag tc">Cloud Storage</span><span class="tag tc">Apigee X</span><span class="tag tc">Cloud Spanner</span></div>
+      </div>
+      <div class="sk-cat fi">
+        <div class="sk-hdr"><div class="sk-ico" style="background:rgba(0,120,215,.12)">🔷</div><span class="sk-name" style="color:var(--purple)">Azure & DevOps</span></div>
+        <div class="tags"><span class="tag tp">Azure VMs</span><span class="tag tp">Azure Networking</span><span class="tag tp">Azure DevOps</span><span class="tag tp">Jenkins CI/CD</span><span class="tag tp">GitHub Actions</span><span class="tag tp">Terraform</span><span class="tag tp">CloudFormation</span><span class="tag tp">Sonarqube</span><span class="tag tp">CircleCI</span><span class="tag tp">Acquia Cloud</span></div>
+      </div>
+      <div class="sk-cat fi">
+        <div class="sk-hdr"><div class="sk-ico" style="background:rgba(255,107,53,.12)">🔐</div><span class="sk-name" id="sk-sec-name" style="color:#ff6b35">Seguridad & Gobernanza</span></div>
+        <div class="tags"><span class="tag to">DevSecOps</span><span class="tag to">WAF</span><span class="tag to">IAM / RBAC</span><span class="tag to">ISO 27001</span><span class="tag to">OWASP</span><span class="tag to">Policy as Code</span><span class="tag to">Threat Modelling</span><span class="tag to">Ethical Hacking</span><span class="tag to">SQL Injection</span><span class="tag to">FinOps</span></div>
+      </div>
+      <div class="sk-cat fi">
+        <div class="sk-hdr"><div class="sk-ico" style="background:rgba(0,255,179,.1)">👁️</div><span class="sk-name" id="sk-obs-name" style="color:var(--mint)">Observabilidad & SRE</span></div>
+        <div class="tags"><span class="tag tm">CloudWatch</span><span class="tag tm">Dynatrace</span><span class="tag tm">Datadog</span><span class="tag tm">New Relic</span><span class="tag tm">OpenTelemetry</span><span class="tag tm">Kibana</span><span class="tag tm">ElasticSearch</span><span class="tag tm" id="dora-tag">Métricas DORA</span><span class="tag tm">SRE</span><span class="tag tm">MTTR</span></div>
+      </div>
+      <div class="sk-cat fi">
+        <div class="sk-hdr"><div class="sk-ico" style="background:rgba(155,89,255,.12)">💻</div><span class="sk-name" id="sk-be-name" style="color:var(--purple)">Backend & Desarrollo</span></div>
+        <div class="tags"><span class="tag tp">Node.js</span><span class="tag tp">Python</span><span class="tag tp">JavaScript</span><span class="tag tp">Java EE / Spring</span><span class="tag tp">.NET / C#</span><span class="tag tp">React</span><span class="tag tp">Angular</span><span class="tag tp">Docker</span><span class="tag tp">Kubernetes</span><span class="tag tp">Microservicios</span><span class="tag tp">RabbitMQ</span><span class="tag tp">GraphQL</span><span class="tag tp">Ionic</span><span class="tag tp">Blockchain / EVM</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="wrap">
+    <div class="sec-hdr fi">
+      <span class="sec-tag" id="exp-tag">03 · Trayectoria</span>
+      <h2 class="sec-title" id="exp-title">Experiencia <span class="hi">Profesional</span></h2>
+      <p class="sec-sub" id="exp-sub">10+ años construyendo infraestructuras cloud críticas en LATAM y el mundo</p>
+    </div>
+    <div class="timeline">
+
+      <div class="t-item">
+        <div class="t-dot dc"></div>
+        <div class="exp-card">
+          <div class="exp-top">
+            <span class="exp-role" id="er0">Consultor Senior DevOps Engineer</span>
+            <span class="exp-period" id="ep0">ABR 2025 — Actualidad</span>
+          </div>
+          <div class="exp-company">Ole Life</div>
+          <p class="exp-desc" id="ed0">Administración integral del proceso DevOps para aplicaciones críticas del negocio en entornos multi-nube (AWS y GCP), combinando optimización de pipelines CI/CD, DevSecOps y gestión de infraestructura con enfoque en seguridad y eficiencia operativa.</p>
+          <ul class="exp-ul" id="eb0">
+            <li>Diseño e implementación del ciclo completo CI/CD en Jenkins, GitHub Actions y Azure DevOps</li>
+            <li>Administración de AWS: ECS, Lambda, RDS, S3, CloudFront, EKS, Kinesis, DynamoDB</li>
+            <li>Google Cloud: Cloud Functions, Cloud Run, Composer, networking y VPN</li>
+            <li>IaC con Terraform, DevSecOps, IAM, tagging automático y cumplimiento normativo</li>
+            <li>Observabilidad avanzada: CloudWatch, Dynatrace y OpenTelemetry</li>
+            <li>FinOps: reducción de costos cloud en entornos productivos y no productivos</li>
+          </ul>
+          <div class="exp-tech"><span class="tbadge">AWS ECS / EKS</span><span class="tbadge">GCP Cloud Run</span><span class="tbadge">Terraform</span><span class="tbadge">Jenkins</span><span class="tbadge">GitHub Actions</span><span class="tbadge">Dynatrace</span><span class="tbadge">DevSecOps</span><span class="tbadge">FinOps</span></div>
+        </div>
+      </div>
+
+      <div class="t-item">
+        <div class="t-dot dp"></div>
+        <div class="exp-card">
+          <div class="exp-top">
+            <span class="exp-role" id="er1">Cloud Architecture Manager</span>
+            <span class="exp-period" id="ep1">JUL 2025 — FEB 2026</span>
+          </div>
+          <div class="exp-company">Itera Process</div>
+          <p class="exp-desc" id="ed1">Liderazgo de estrategia, diseño y gobierno de arquitecturas cloud multi-cuenta y multi-nube para clientes del sector financiero, asegurador y corporativo en LATAM. Gestión de equipo de 22 arquitectos y 4 gerentes de proyectos.</p>
+          <ul class="exp-ul" id="eb1">
+            <li>Gestión de 22 arquitectos cloud y 4 gerentes de proyectos</li>
+            <li>Diseño de Landing Zones empresariales y estándares de gobierno cloud</li>
+            <li>Administración multi-cloud: AWS, GCP y Azure alineados con políticas corporativas</li>
+            <li>Implementación de observabilidad con CloudWatch, Dynatrace y Datadog</li>
+            <li>Optimización FinOps y compliance normativo multi-país</li>
+          </ul>
+          <div class="exp-tech"><span class="tbadge">AWS Control Tower</span><span class="tbadge">GCP</span><span class="tbadge">Azure</span><span class="tbadge">Terraform</span><span class="tbadge">Jenkins CI/CD</span><span class="tbadge">Datadog</span><span class="tbadge">Dynatrace</span><span class="tbadge">Multi-cloud Governance</span></div>
+        </div>
+      </div>
+
+      <div class="t-item">
+        <div class="t-dot dm"></div>
+        <div class="exp-card">
+          <div class="exp-top">
+            <span class="exp-role" id="er2">Cloud Solutions Architect Senior</span>
+            <span class="exp-period" id="ep2">ENE 2025 — JUL 2025</span>
+          </div>
+          <div class="exp-company">Itera Process</div>
+          <p class="exp-desc" id="ed2">Arquitecto de soluciones cloud especializado en AWS y GCP para el sector bancario. Enfoque en Landing Zone, DevSecOps y FinOps en entornos altamente regulados para banca, cajas de compensación y seguros en LATAM.</p>
+          <ul class="exp-ul" id="eb2">
+            <li>Diseño de arquitecturas AWS Control Tower, VPC Peering, Transit Gateway y VPNs</li>
+            <li>Automatización con Terraform, Jenkins y GitHub Actions</li>
+            <li>DevSecOps y Policy as Code para seguridad y cumplimiento normativo</li>
+            <li>Observabilidad avanzada: CloudWatch y OpenTelemetry</li>
+          </ul>
+          <div class="exp-tech"><span class="tbadge">AWS Control Tower</span><span class="tbadge">Terraform</span><span class="tbadge">Jenkins</span><span class="tbadge">DevSecOps</span><span class="tbadge">FinOps</span><span class="tbadge">GCP</span><span class="tbadge">Transit Gateway</span></div>
+        </div>
+      </div>
+
+      <div class="t-item">
+        <div class="t-dot dc"></div>
+        <div class="exp-card">
+          <div class="exp-top">
+            <span class="exp-role" id="er3">Principal DevSecOps Engineer & DevOps Lead</span>
+            <span class="exp-period" id="ep3">ABR 2022 — DIC 2024</span>
+          </div>
+          <div class="exp-company">Liberty Mutual Insurance · HDI Seguros</div>
+          <p class="exp-desc" id="ed3">Principal DevSecOps para mercados de Asia, Europa y Latinoamérica. Arquitecto líder del portal de agentes y software de inspecciones digitales. Líder de la migración de ~68 aplicaciones empresariales en la transición Liberty → HDI Seguros garantizando continuidad operativa.</p>
+          <ul class="exp-ul" id="eb3">
+            <li>Migración de más de 68 aplicaciones empresariales (Liberty → HDI) con mínima afectación al negocio</li>
+            <li>Principal Cloud Engineer para el mercado Andino: Chile, Ecuador y Colombia</li>
+            <li>Implementación del framework de Excelentes Prácticas de Ingeniería (EPI)</li>
+            <li>Referente en CI/CD y par de revisión de infraestructura y despliegue continuo</li>
+            <li>Arquitecto de soluciones del portal de agentes multi-mercado (Asia, Europa, LATAM)</li>
+          </ul>
+          <div class="exp-tech"><span class="tbadge">Python</span><span class="tbadge">Java / Groovy</span><span class="tbadge">AWS</span><span class="tbadge">GCP</span><span class="tbadge">Acquia Cloud</span><span class="tbadge">Jenkins</span><span class="tbadge">Terraform</span><span class="tbadge">New Relic</span><span class="tbadge">Datadog</span><span class="tbadge">ApigeeX</span></div>
+        </div>
+      </div>
+
+      <div class="t-item">
+        <div class="t-dot dp"></div>
+        <div class="exp-card">
+          <div class="exp-top">
+            <span class="exp-role" id="er4">Desarrollador Senior Full Stack & DevOps</span>
+            <span class="exp-period" id="ep4">AGO 2021 — ABR 2022</span>
+          </div>
+          <div class="exp-company">Kibernum · Liberty Mutual Insurance</div>
+          <p class="exp-desc" id="ed4">Senior Full Stack y DevOps para Liberty Mutual Insurance. Desarrollo del portal de agentes multi-mercado en AWS y Acquia Cloud, con implementación de pipelines CI/CD y prácticas DevOps.</p>
+          <div class="exp-tech"><span class="tbadge">Python</span><span class="tbadge">Java</span><span class="tbadge">AWS</span><span class="tbadge">Acquia Cloud</span><span class="tbadge">Jenkins</span><span class="tbadge">Sonarqube</span></div>
+        </div>
+      </div>
+
+      <div class="t-item">
+        <div class="t-dot dm"></div>
+        <div class="exp-card">
+          <div class="exp-top">
+            <span class="exp-role" id="er5">Tech Lead & Senior Full Stack DevOps</span>
+            <span class="exp-period">2020 — 2021</span>
+          </div>
+          <div class="exp-company">Oky YES · Soft Dev Team · 321 Ignition · World Office Colombia</div>
+          <p class="exp-desc" id="ed5">Roles de liderazgo técnico y desarrollo full stack con enfoque en arquitecturas cloud (AWS/GCP), microservicios, DevOps y modernización de aplicaciones. Gestión de equipos de desarrollo, CI/CD y despliegues en nube.</p>
+          <div class="exp-tech"><span class="tbadge">Node.js</span><span class="tbadge">React</span><span class="tbadge">Angular</span><span class="tbadge">AWS</span><span class="tbadge">GCP</span><span class="tbadge">Docker</span><span class="tbadge">Kubernetes</span><span class="tbadge">BigQuery</span><span class="tbadge">MongoDB</span><span class="tbadge">RabbitMQ</span></div>
+        </div>
+      </div>
+
+      <div class="t-item">
+        <div class="t-dot da"></div>
+        <div class="exp-card">
+          <div class="exp-top">
+            <span class="exp-role" id="er6">Full Stack Developer — Inicios de Carrera</span>
+            <span class="exp-period">2016 — 2020</span>
+          </div>
+          <div class="exp-company">Emet Business Group · Universidad del Magdalena · Código Fuente TI</div>
+          <p class="exp-desc" id="ed6">Desarrollo de aplicaciones web y móviles, sistemas contables en AWS, plataformas blockchain con contratos inteligentes EVM, apps iOS publicadas en App Store e integración con GCP. Base full stack sólida que fundamentó la evolución hacia cloud.</p>
+          <div class="exp-tech"><span class="tbadge">Node.js</span><span class="tbadge">Angular</span><span class="tbadge">.NET Core</span><span class="tbadge">Java EE</span><span class="tbadge">Ionic</span><span class="tbadge">Swift</span><span class="tbadge">Python / Pandas</span><span class="tbadge">GCP</span><span class="tbadge">Blockchain / EVM</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education" class="edu-bg">
+  <div class="wrap">
+    <div class="sec-hdr fi">
+      <span class="sec-tag" id="edu-tag">04 · Formación</span>
+      <h2 class="sec-title" id="edu-title">Educación & <span class="hi">Certificaciones</span></h2>
+    </div>
+    <div class="edu-top fi">
+      <div class="edu-card">
+        <div class="edu-ico">🎓</div>
+        <div class="edu-deg" id="edu-d0">Ingeniería de Sistemas</div>
+        <div class="edu-inst">Universidad del Magdalena</div>
+        <div class="edu-yr">2014 — 2020</div>
+        <p class="edu-note" id="edu-n0">Formación integral en sistemas e infraestructura con especialización posterior en cloud computing, arquitecturas distribuidas y DevSecOps.</p>
+      </div>
+      <div class="edu-card">
+        <div class="edu-ico">🏆</div>
+        <div class="edu-deg" id="edu-d1">Bachiller Galardonado</div>
+        <div class="edu-inst">I.E. San Juan del Córdoba · Ciénaga, Magdalena</div>
+        <div class="edu-yr">2006 — 2010</div>
+        <p class="edu-note" id="edu-n1">Mejor bachiller 2010. Mejor promedio ponderado ICFES sector oficial. Reconocimiento Alcaldía de Ciénaga · Student Night Talent.</p>
+      </div>
+    </div>
+    <div class="fi">
+      <p class="certs-title" id="cert-ttl">Certificaciones & Capacitaciones</p>
+      <div class="certs-grid">
+        <div class="cert"><div class="c-ico cg">☁️</div>Cloud Architecture with Google Cloud · Professional</div>
+        <div class="cert"><div class="c-ico cg">📊</div>Data Engineering with Google Cloud</div>
+        <div class="cert"><div class="c-ico cg">⚙️</div>Architecting with Google Kubernetes Engine</div>
+        <div class="cert"><div class="c-ico cg">🔧</div>Cloud Engineering with Google Cloud</div>
+        <div class="cert"><div class="c-ico cg">📈</div>SRE and DevOps Engineer with Google Cloud</div>
+        <div class="cert"><div class="c-ico ca">☁️</div>AWS Fundamentals: Going Cloud Native</div>
+        <div class="cert"><div class="c-ico ca">🔑</div>AWS Security Fundamentals</div>
+        <div class="cert"><div class="c-ico ca">🏛️</div>AWS Cloud Solution Architect Fundamentals</div>
+        <div class="cert"><div class="c-ico ca">⚙️</div>AWS Cloud Technology Consultant</div>
+        <div class="cert"><div class="c-ico ca">🛠️</div>DevOps en AWS — Coursera</div>
+        <div class="cert"><div class="c-ico cs">🔐</div>Ethical Hacking & SQL Injection — Pluralsight</div>
+        <div class="cert"><div class="c-ico cs">🛡️</div>OWASP: API Security Playbook — Pluralsight</div>
+        <div class="cert"><div class="c-ico cs">⚠️</div>Performing Threat Modelling — Pluralsight</div>
+        <div class="cert"><div class="c-ico cs">💻</div>Secure Coding</div>
+        <div class="cert"><div class="c-ico cd">🤖</div>Data Science in Python</div>
+        <div class="cert"><div class="c-ico cd">🐍</div>Crash Course on Python</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="wrap">
+    <div class="contact-wrap fi">
+      <span class="sec-tag" id="ct-tag">05 · Contacto</span>
+      <h2 class="sec-title" style="margin-top:8px" id="ct-title">Hablemos de tu <span class="hi">Próximo Proyecto</span></h2>
+      <p class="sec-sub" style="margin-top:14px" id="ct-sub">Disponible para roles de arquitectura cloud, consultoría DevSecOps y liderazgo técnico en proyectos enterprise en LATAM y el mundo.</p>
+      <div class="contact-grid">
+        <a href="mailto:fornarisandres240@gmail.com" class="c-link"><span>✉️</span><span>Email</span></a>
+        <a href="https://www.linkedin.com/in/andresfornaris/" target="_blank" rel="noopener" class="c-link"><span>💼</span><span>LinkedIn</span></a>
+        <a href="https://github.com/andres-fornaris" target="_blank" rel="noopener" class="c-link"><span>⌨️</span><span>GitHub</span></a>
+        <a href="Andres_Fornaris_CV_Spanish.docx.pdf" download class="c-link" id="dl-contact"><span>📄</span><span id="btn-dl">Descargar CV</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <p class="foot-txt"><span class="ac">AF</span>.cloud · Andrés Fornaris · Cloud Architecture Manager · DevSecOps Engineer · <span class="ac">GitHub Pages</span></p>
+  </div>
+</footer>
+
+<script>
+/* ===== TRANSLATIONS ===== */
+const T = {
+  es: {
+    'nl-about':'Perfil','nl-skills':'Stack','nl-exp':'Experiencia','nl-edu':'Formación','nl-contact':'Contacto',
+    'ml-about':'Perfil','ml-exp':'Experiencia','ml-edu':'Formación','ml-contact':'Contacto',
+    'hero-badge':'Disponible · Open to Work',
+    'hero-sub':'<strong>Cloud Architecture Manager</strong> · Principal DevSecOps Engineer<br>Multi-Cloud Strategist · Platform Engineering Leader',
+    'btn-exp-txt':'Ver Experiencia','btn-cv-txt':'Descargar CV','btn-cta-txt':'Contactar','scroll-lbl':'scroll',
+    'sl-0':'Años de Experiencia','sl-1':'Apps Migradas','sl-2':'Arquitectos Liderados','sl-3':'Nubes Dominadas',
+    'about-tag':'01 · Perfil',
+    'about-title':'Sobre <span class="hi">Mí</span>',
+    'about-p1':'Ingeniero de Sistemas con <strong>más de 10 años de experiencia</strong> liderando arquitecturas cloud empresariales en entornos multi-país y multi-nube — AWS, Google Cloud y Azure.',
+    'about-p2':'Especialista en diseño de <strong>Landing Zones</strong>, gobierno cloud, DevSecOps, automatización avanzada e implementación de modelos de <strong>Platform Engineering</strong> para los sectores financiero y asegurador en LATAM.',
+    'about-p3':'He liderado equipos de hasta <strong>22 arquitectos</strong> y gestionado la migración de decenas de aplicaciones críticas, incluyendo la transición completa de Liberty Seguros a HDI Seguros.',
+    'about-extra':'🎤 <strong>Ponente en CDO Latam 2025</strong> — Inteligencia Artificial & Datos<br>🌐 Inglés B1 · Español nativo<br>📍 Colombia · Disponible para trabajo remoto LATAM / Global',
+    'hi-t0':'Cloud Architecture & Landing Zone','hi-d0':'Diseño de estructuras multi-account en AWS, arquitecturas serverless, contenerizadas y multi-región con alta disponibilidad.',
+    'hi-t1':'DevSecOps & Seguridad','hi-d1':'Seguridad integrada en pipelines, WAF, GuardDuty, Security Hub, IAM con mínimo privilegio e ISO 27001.',
+    'hi-t2':'Platform Engineering & CI/CD','hi-d2':'Pipelines en Jenkins, GitHub Actions y Azure DevOps. Infrastructure as Code con Terraform y CloudFormation.',
+    'hi-t3':'FinOps & SRE','hi-d3':'Optimización de costos cloud enterprise, métricas DORA, observabilidad con Dynatrace, Datadog y OpenTelemetry.',
+    'sk-tag':'02 · Stack Técnico','sk-title':'Tecnologías & <span class="hi">Expertise</span>',
+    'sk-sub':'Dominio multi-nube con enfoque en seguridad, escalabilidad y gobierno enterprise',
+    'sk-sec-name':'Seguridad & Gobernanza','sk-obs-name':'Observabilidad & SRE','sk-be-name':'Backend & Desarrollo','dora-tag':'Métricas DORA',
+    'exp-tag':'03 · Trayectoria','exp-title':'Experiencia <span class="hi">Profesional</span>',
+    'exp-sub':'10+ años construyendo infraestructuras cloud críticas en LATAM y el mundo',
+    'er0':'Consultor Senior DevOps Engineer','ep0':'ABR 2025 — Actualidad',
+    'ed0':'Administración integral del proceso DevOps para aplicaciones críticas del negocio en entornos multi-nube (AWS y GCP), combinando optimización de pipelines CI/CD, DevSecOps y gestión de infraestructura con enfoque en seguridad y eficiencia operativa.',
+    'eb0':'<li>Diseño e implementación del ciclo completo CI/CD en Jenkins, GitHub Actions y Azure DevOps</li><li>Administración de AWS: ECS, Lambda, RDS, S3, CloudFront, EKS, Kinesis, DynamoDB</li><li>Google Cloud: Cloud Functions, Cloud Run, Composer, networking y VPN</li><li>IaC con Terraform, DevSecOps, IAM, tagging automático y cumplimiento normativo</li><li>Observabilidad avanzada: CloudWatch, Dynatrace y OpenTelemetry</li><li>FinOps: reducción de costos cloud en entornos productivos y no productivos</li>',
+    'er1':'Cloud Architecture Manager','ep1':'JUL 2025 — FEB 2026',
+    'ed1':'Liderazgo de estrategia, diseño y gobierno de arquitecturas cloud multi-cuenta y multi-nube para clientes del sector financiero, asegurador y corporativo en LATAM. Gestión de equipo de 22 arquitectos y 4 gerentes de proyectos.',
+    'eb1':'<li>Gestión de 22 arquitectos cloud y 4 gerentes de proyectos</li><li>Diseño de Landing Zones empresariales y estándares de gobierno cloud</li><li>Administración multi-cloud: AWS, GCP y Azure alineados con políticas corporativas</li><li>Implementación de observabilidad con CloudWatch, Dynatrace y Datadog</li><li>Optimización FinOps y compliance normativo multi-país</li>',
+    'er2':'Cloud Solutions Architect Senior','ep2':'ENE 2025 — JUL 2025',
+    'ed2':'Arquitecto de soluciones cloud especializado en AWS y GCP para el sector bancario. Enfoque en Landing Zone, DevSecOps y FinOps en entornos altamente regulados para banca, cajas de compensación y seguros en LATAM.',
+    'eb2':'<li>Diseño de arquitecturas AWS Control Tower, VPC Peering, Transit Gateway y VPNs</li><li>Automatización con Terraform, Jenkins y GitHub Actions</li><li>DevSecOps y Policy as Code para seguridad y cumplimiento normativo</li><li>Observabilidad avanzada: CloudWatch y OpenTelemetry</li>',
+    'er3':'Principal DevSecOps Engineer & DevOps Lead','ep3':'ABR 2022 — DIC 2024',
+    'ed3':'Principal DevSecOps para mercados de Asia, Europa y Latinoamérica. Arquitecto líder del portal de agentes y software de inspecciones digitales. Líder de la migración de ~68 aplicaciones empresariales en la transición Liberty → HDI Seguros garantizando continuidad operativa.',
+    'eb3':'<li>Migración de más de 68 aplicaciones empresariales (Liberty → HDI) con mínima afectación al negocio</li><li>Principal Cloud Engineer para el mercado Andino: Chile, Ecuador y Colombia</li><li>Implementación del framework de Excelentes Prácticas de Ingeniería (EPI)</li><li>Referente en CI/CD y par de revisión de infraestructura y despliegue continuo</li><li>Arquitecto de soluciones del portal de agentes multi-mercado (Asia, Europa, LATAM)</li>',
+    'er4':'Desarrollador Senior Full Stack & DevOps','ep4':'AGO 2021 — ABR 2022',
+    'ed4':'Senior Full Stack y DevOps para Liberty Mutual Insurance. Desarrollo del portal de agentes multi-mercado en AWS y Acquia Cloud, con implementación de pipelines CI/CD y prácticas DevOps.',
+    'er5':'Tech Lead & Senior Full Stack DevOps',
+    'ed5':'Roles de liderazgo técnico y desarrollo full stack con enfoque en arquitecturas cloud (AWS/GCP), microservicios, DevOps y modernización de aplicaciones. Gestión de equipos de desarrollo, CI/CD y despliegues en nube.',
+    'er6':'Full Stack Developer — Inicios de Carrera',
+    'ed6':'Desarrollo de aplicaciones web y móviles, sistemas contables en AWS, plataformas blockchain con contratos inteligentes EVM, apps iOS publicadas en App Store e integración con GCP. Base full stack sólida que fundamentó la evolución hacia cloud.',
+    'edu-tag':'04 · Formación','edu-title':'Educación & <span class="hi">Certificaciones</span>',
+    'edu-d0':'Ingeniería de Sistemas',
+    'edu-n0':'Formación integral en sistemas e infraestructura con especialización posterior en cloud computing, arquitecturas distribuidas y DevSecOps.',
+    'edu-d1':'Bachiller Galardonado',
+    'edu-n1':'Mejor bachiller 2010. Mejor promedio ponderado ICFES sector oficial. Reconocimiento Alcaldía de Ciénaga · Student Night Talent.',
+    'cert-ttl':'Certificaciones & Capacitaciones',
+    'ct-tag':'05 · Contacto','ct-title':'Hablemos de tu <span class="hi">Próximo Proyecto</span>',
+    'ct-sub':'Disponible para roles de arquitectura cloud, consultoría DevSecOps y liderazgo técnico en proyectos enterprise en LATAM y el mundo.',
+    'btn-dl':'Descargar CV',
+    _phrases:['AWS · GCP · Azure','Landing Zone Designer','Principal DevSecOps Engineer','Platform Engineering Leader','FinOps Optimizer','Multi-Cloud · LATAM & Global']
+  },
+  en: {
+    'nl-about':'Profile','nl-skills':'Stack','nl-exp':'Experience','nl-edu':'Education','nl-contact':'Contact',
+    'ml-about':'Profile','ml-exp':'Experience','ml-edu':'Education','ml-contact':'Contact',
+    'hero-badge':'Available · Open to Work',
+    'hero-sub':'<strong>Cloud Architecture Manager</strong> · Principal DevSecOps Engineer<br>Multi-Cloud Strategist · Platform Engineering Leader',
+    'btn-exp-txt':'View Experience','btn-cv-txt':'Download CV','btn-cta-txt':'Contact','scroll-lbl':'scroll',
+    'sl-0':'Years of Experience','sl-1':'Apps Migrated','sl-2':'Architects Led','sl-3':'Clouds Mastered',
+    'about-tag':'01 · Profile',
+    'about-title':'About <span class="hi">Me</span>',
+    'about-p1':'Systems Engineer with <strong>over 10 years of experience</strong> leading enterprise cloud architectures in multi-country and multi-cloud environments — AWS, Google Cloud, and Azure.',
+    'about-p2':'Specialist in <strong>Landing Zone</strong> design, cloud governance, DevSecOps, advanced automation, and implementation of <strong>Platform Engineering</strong> models for the financial and insurance sectors across LATAM.',
+    'about-p3':'I have led teams of up to <strong>22 architects</strong> and managed the migration of dozens of critical applications, including the full transition from Liberty Seguros to HDI Seguros.',
+    'about-extra':'🎤 <strong>Speaker at CDO Latam 2025</strong> — Artificial Intelligence & Data<br>🌐 English B1 · Native Spanish<br>📍 Colombia · Available for remote work LATAM / Global',
+    'hi-t0':'Cloud Architecture & Landing Zone','hi-d0':'Multi-account AWS structure design, serverless and containerized architectures, multi-region with high availability.',
+    'hi-t1':'DevSecOps & Security','hi-d1':'Security integrated in pipelines, WAF, GuardDuty, Security Hub, least-privilege IAM, and ISO 27001.',
+    'hi-t2':'Platform Engineering & CI/CD','hi-d2':'Pipelines in Jenkins, GitHub Actions, and Azure DevOps. Infrastructure as Code with Terraform and CloudFormation.',
+    'hi-t3':'FinOps & SRE','hi-d3':'Enterprise cloud cost optimization, DORA metrics, observability with Dynatrace, Datadog, and OpenTelemetry.',
+    'sk-tag':'02 · Tech Stack','sk-title':'Technologies & <span class="hi">Expertise</span>',
+    'sk-sub':'Multi-cloud expertise focused on enterprise security, scalability, and governance',
+    'sk-sec-name':'Security & Governance','sk-obs-name':'Observability & SRE','sk-be-name':'Backend & Development','dora-tag':'DORA Metrics',
+    'exp-tag':'03 · Career','exp-title':'Professional <span class="hi">Experience</span>',
+    'exp-sub':'10+ years building critical cloud infrastructure in LATAM and globally',
+    'er0':'Senior DevOps Engineer Consultant','ep0':'APR 2025 — Present',
+    'ed0':'Comprehensive management of DevOps processes for critical business applications in multi-cloud environments (AWS and GCP), combining CI/CD pipeline optimization, DevSecOps, and infrastructure management focused on security and operational efficiency.',
+    'eb0':'<li>Full CI/CD lifecycle design and implementation in Jenkins, GitHub Actions, and Azure DevOps</li><li>AWS administration: ECS, Lambda, RDS, S3, CloudFront, EKS, Kinesis, DynamoDB</li><li>Google Cloud: Cloud Functions, Cloud Run, Composer, networking and VPN</li><li>IaC with Terraform, DevSecOps, IAM, automated tagging and regulatory compliance</li><li>Advanced observability: CloudWatch, Dynatrace, and OpenTelemetry</li><li>FinOps: cloud cost reduction across production and non-production environments</li>',
+    'er1':'Cloud Architecture Manager','ep1':'JUL 2025 — FEB 2026',
+    'ed1':'Leadership of strategy, design, and governance of multi-account and multi-cloud architectures for clients in the financial, insurance, and corporate sectors in LATAM. Management of a team of 22 architects and 4 project managers.',
+    'eb1':'<li>Management of 22 cloud architects and 4 project managers</li><li>Design of enterprise Landing Zones and cloud governance standards</li><li>Multi-cloud administration: AWS, GCP, and Azure aligned with corporate policies</li><li>Observability implementation with CloudWatch, Dynatrace, and Datadog</li><li>FinOps optimization and multi-country regulatory compliance</li>',
+    'er2':'Senior Cloud Solutions Architect','ep2':'JAN 2025 — JUL 2025',
+    'ed2':'Senior cloud solutions architect specializing in AWS and GCP for the banking sector. Focus on Landing Zone, DevSecOps, and FinOps in highly regulated environments for banking, compensation funds, and insurance in LATAM.',
+    'eb2':'<li>AWS Control Tower, VPC Peering, Transit Gateway, and VPN architecture design</li><li>Automation with Terraform, Jenkins, and GitHub Actions</li><li>DevSecOps and Policy as Code for security and regulatory compliance</li><li>Advanced observability: CloudWatch and OpenTelemetry</li>',
+    'er3':'Principal DevSecOps Engineer & DevOps Lead','ep3':'APR 2022 — DEC 2024',
+    'ed3':'Principal DevSecOps for markets in Asia, Europe, and Latin America. Lead architect for the agents portal and digital inspection software. Leader of the migration of ~68 enterprise applications in the Liberty → HDI Seguros transition, ensuring operational continuity.',
+    'eb3':'<li>Migration of more than 68 enterprise applications (Liberty → HDI) with minimal business impact</li><li>Principal Cloud Engineer for the Andean market: Chile, Ecuador, and Colombia</li><li>Implementation of the Engineering Excellence Practices (EEP) framework</li><li>Reference for CI/CD, infrastructure review, and continuous deployment</li><li>Solutions architect for the multi-market agents portal (Asia, Europe, LATAM)</li>',
+    'er4':'Senior Full Stack Developer & DevOps','ep4':'AUG 2021 — APR 2022',
+    'ed4':'Senior Full Stack and DevOps for Liberty Mutual Insurance. Development of the multi-market agents portal on AWS and Acquia Cloud, with CI/CD pipeline implementation and DevOps practices.',
+    'er5':'Tech Lead & Senior Full Stack DevOps',
+    'ed5':'Technical leadership and full stack development roles focused on cloud architectures (AWS/GCP), microservices, DevOps, and application modernization. Development team management, CI/CD, and cloud deployments.',
+    'er6':'Full Stack Developer — Early Career',
+    'ed6':'Development of web and mobile applications, cloud accounting systems on AWS, blockchain platforms with EVM smart contracts, iOS apps published on the App Store, and GCP integration. Solid full stack foundation that evolved into cloud expertise.',
+    'edu-tag':'04 · Education','edu-title':'Education & <span class="hi">Certifications</span>',
+    'edu-d0':'Systems Engineering',
+    'edu-n0':'Comprehensive training in systems and infrastructure with later specialization in cloud computing, distributed architectures, and DevSecOps.',
+    'edu-d1':'Honors Graduate',
+    'edu-n1':'Best graduate 2010. Best weighted ICFES average in the public sector. Recognition from the Mayor of Ciénaga · Student Night Talent.',
+    'cert-ttl':'Certifications & Training',
+    'ct-tag':'05 · Contact','ct-title':'Let\'s Talk About Your <span class="hi">Next Project</span>',
+    'ct-sub':'Available for cloud architecture roles, DevSecOps consulting, and technical leadership in enterprise projects across LATAM and globally.',
+    'btn-dl':'Download CV',
+    _phrases:['AWS · GCP · Azure','Landing Zone Designer','Principal DevSecOps Engineer','Platform Engineering Leader','FinOps Optimizer','Multi-Cloud · LATAM & Global']
+  }
+};
+
+/* ===== LANG SYSTEM ===== */
+let lang = localStorage.getItem('lang') || 'es';
+let phrases = T[lang]._phrases;
+
+function applyLang(l) {
+  const data = T[l];
+  Object.keys(data).forEach(id => {
+    if (id === '_phrases') return;
+    const el = document.getElementById(id);
+    if (!el) return;
+    const val = data[id];
+    if (val.includes('<')) el.innerHTML = val;
+    else el.textContent = val;
+  });
+  document.documentElement.lang = l;
+  const btns = ['lang-btn','lang-btn-mob'];
+  btns.forEach(bid => { const b = document.getElementById(bid); if(b) b.textContent = l === 'es' ? 'EN' : 'ES'; });
+  phrases = data._phrases;
+  // Swap CV download links by language
+  const cvFile = l === 'es' ? 'Andres_Fornaris_CV_Spanish.docx.pdf' : 'Andres_Fornaris_CV_English.docx.pdf';
+  ['dl-hero','dl-contact'].forEach(id => { const a = document.getElementById(id); if(a) a.href = cvFile; });
+}
+
+function toggleLang() {
+  lang = lang === 'es' ? 'en' : 'es';
+  localStorage.setItem('lang', lang);
+  applyLang(lang);
+}
+
+/* ===== CANVAS ===== */
+(function(){
+  const c = document.getElementById('cnv'), ctx = c.getContext('2d');
+  let pts=[], W, H;
+  function resize(){ W=c.width=innerWidth; H=c.height=innerHeight; }
+  resize(); window.addEventListener('resize',()=>{resize();init();});
+  function Pt(){ this.x=Math.random()*W; this.y=Math.random()*H; this.vx=(Math.random()-.5)*.35; this.vy=(Math.random()-.5)*.35; this.r=Math.random()*1.2+.4; this.a=Math.random()*.4+.15; }
+  function init(){ pts=Array.from({length:Math.min(70,Math.floor(W/22))},()=>new Pt()); }
+  init();
+  (function draw(){
+    ctx.clearRect(0,0,W,H);
+    pts.forEach(p=>{ p.x+=p.vx; p.y+=p.vy; if(p.x<0||p.x>W)p.vx*=-1; if(p.y<0||p.y>H)p.vy*=-1; ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fillStyle=`rgba(0,212,255,${p.a})`; ctx.fill(); });
+    for(let i=0;i<pts.length;i++) for(let j=i+1;j<pts.length;j++){
+      const dx=pts[i].x-pts[j].x, dy=pts[i].y-pts[j].y, d=Math.sqrt(dx*dx+dy*dy);
+      if(d<130){ ctx.beginPath(); ctx.moveTo(pts[i].x,pts[i].y); ctx.lineTo(pts[j].x,pts[j].y); ctx.strokeStyle=`rgba(0,212,255,${.07*(1-d/130)})`; ctx.lineWidth=.6; ctx.stroke(); }
+    }
+    requestAnimationFrame(draw);
+  })();
+})();
+
+/* ===== TYPEWRITER ===== */
+let twPi=0, twCi=0, twDel=false;
+const twEl = document.getElementById('tw');
+function type(){
+  const cur = phrases[twPi];
+  if(!twDel){ twEl.textContent=cur.slice(0,++twCi); if(twCi===cur.length){twDel=true;setTimeout(type,1800);return;} }
+  else { twEl.textContent=cur.slice(0,--twCi); if(twCi===0){twDel=false;twPi=(twPi+1)%phrases.length;} }
+  setTimeout(type, twDel?45:75);
+}
+type();
+
+/* ===== COUNTER ===== */
+function animCount(el, target, suffix){
+  let start=0;
+  (function step(ts){ if(!start)start=ts; const p=Math.min((ts-start)/1400,1); const e=1-Math.pow(1-p,3); el.textContent=Math.floor(e*target)+(suffix||''); if(p<1)requestAnimationFrame(step); else el.textContent=target+(suffix||''); })(performance.now());
+}
+
+/* ===== INTERSECTION OBSERVER ===== */
+const io = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('vis');
+      const n = e.target.querySelector('.stat-num[data-target]');
+      if(n && !n.dataset.done){ n.dataset.done='1'; animCount(n,+n.dataset.target,n.dataset.suffix||''); }
+    }
+  });
+},{threshold:.12});
+document.querySelectorAll('.fi,.t-item').forEach(el=>io.observe(el));
+
+/* ===== NAV ===== */
+const navEl=document.getElementById('nav');
+const navAs=document.querySelectorAll('.nav-links a[href^="#"]');
+const secs=document.querySelectorAll('section[id]');
+window.addEventListener('scroll',()=>{
+  navEl.classList.toggle('scrolled',scrollY>50);
+  let cur=''; secs.forEach(s=>{ if(scrollY>=s.offsetTop-120) cur=s.id; });
+  navAs.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+cur));
+},{passive:true});
+
+/* ===== MOBILE NAV ===== */
+function toggleMob(){ document.getElementById('mobNav').classList.toggle('open'); }
+function closeMob(){ document.getElementById('mobNav').classList.remove('open'); }
+
+/* ===== MOBILE LANG BUTTON ===== */
+const lbMob = document.getElementById('lang-btn-mob');
+if(window.innerWidth<=768) lbMob.style.display='block';
+window.addEventListener('resize',()=>{ lbMob.style.display=innerWidth<=768?'block':'none'; });
+
+/* ===== STAGGER ===== */
+document.querySelectorAll('.t-item').forEach((el,i)=>{ el.style.transitionDelay=(i*.08)+'s'; });
+document.querySelectorAll('.sk-cat').forEach((el,i)=>{ el.style.transitionDelay=(i*.07)+'s'; });
+document.querySelectorAll('.hi-card').forEach((el,i)=>{ el.style.transitionDelay=(i*.1)+'s'; });
+
+/* ===== INIT LANG ===== */
+applyLang(lang);
+</script>
+</body>
+</html>
