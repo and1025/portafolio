@@ -174,6 +174,21 @@ nav.scrolled { box-shadow:0 4px 32px rgba(0,0,0,.4); }
 .rec-info .rec-company { font-size:.72rem; color:var(--muted); margin-top:1px; }
 .rec-stars { display:flex; gap:2px; font-size:.7rem; color:var(--amber); margin-top:4px; }
 
+/* LINKEDIN ENDORSEMENTS */
+.li-section-hdr { display:flex; align-items:center; gap:14px; margin:56px 0 28px; }
+.li-section-line { flex:1; height:1px; background:var(--border); }
+.li-logo { display:inline-flex; align-items:center; gap:7px; font-size:.68rem; color:#0a66c2; font-family:'JetBrains Mono',monospace; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; background:rgba(10,102,194,.07); border:1px solid rgba(10,102,194,.18); border-radius:6px; padding:5px 12px; white-space:nowrap; }
+.li-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:14px; }
+.li-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:20px; backdrop-filter:blur(12px); transition:border-color .25s,transform .25s; display:flex; flex-direction:column; gap:12px; }
+.li-card:hover { border-color:rgba(10,102,194,.35); transform:translateY(-3px); box-shadow:0 0 20px rgba(10,102,194,.12); }
+.li-quote { font-size:.78rem; color:var(--muted); line-height:1.72; font-style:italic; flex:1; }
+.li-sep { height:1px; background:var(--border); }
+.li-author { display:flex; align-items:center; gap:10px; }
+.li-av { width:36px; height:36px; border-radius:50%; background:linear-gradient(135deg,#0a66c2,var(--cyan)); display:flex; align-items:center; justify-content:center; font-size:.72rem; font-weight:800; color:#fff; flex-shrink:0; letter-spacing:0; }
+.li-name { font-size:.79rem; font-weight:700; color:var(--text); }
+.li-role { font-size:.66rem; color:var(--muted); margin-top:1px; line-height:1.35; }
+.li-rel { display:inline-block; font-size:.6rem; color:rgba(10,102,194,.85); background:rgba(10,102,194,.07); border:1px solid rgba(10,102,194,.18); border-radius:4px; padding:2px 7px; margin-top:4px; font-family:'JetBrains Mono',monospace; }
+
 /* CONTACT */
 .contact-wrap { max-width:680px; margin:0 auto; text-align:center; }
 .contact-grid { display:flex; justify-content:center; flex-wrap:wrap; gap:14px; margin-top:40px; }
@@ -585,6 +600,140 @@ footer { padding:28px 0; border-top:1px solid var(--border); text-align:center; 
       </div>
 
     </div>
+
+    <!-- LINKEDIN ENDORSEMENTS -->
+    <div class="fi">
+      <div class="li-section-hdr">
+        <div class="li-section-line"></div>
+        <div class="li-logo">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#0a66c2"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          <span id="li-hdr">Recomendaciones LinkedIn</span>
+        </div>
+        <div class="li-section-line"></div>
+      </div>
+      <div class="li-grid">
+
+        <div class="li-card">
+          <p class="li-quote">"Tuve el privilegio de trabajar con Andrés y puedo afirmar que es un líder excepcional, con una sólida visión estratégica y una destacada capacidad técnica que impacta directamente en los resultados del negocio."</p>
+          <div class="li-sep"></div>
+          <div class="li-author">
+            <div class="li-av">JH</div>
+            <div><div class="li-name">Juan Hurtado</div><div class="li-role">Solutions Architect | SRE | DevSecOps | AWS x4</div><div class="li-rel">Reportaba a Andrés · Itera Process · Feb 2026</div></div>
+          </div>
+        </div>
+
+        <div class="li-card">
+          <p class="li-quote">"Andrés es un líder excepcional con una gran habilidad técnica y estratégica. Destaco especialmente sus habilidades interpersonales y su capacidad para fomentar un ambiente armonioso y colaborativo, siempre dispuesto a escuchar y brindar apoyo."</p>
+          <div class="li-sep"></div>
+          <div class="li-author">
+            <div class="li-av">SR</div>
+            <div><div class="li-name">Sebastian Sanchez Rubio</div><div class="li-role">Tech Lead Cloud | Solution Architect | SRE | DevOps</div><div class="li-rel">Reportaba a Andrés · Itera Process · Feb 2026</div></div>
+          </div>
+        </div>
+
+        <div class="li-card">
+          <p class="li-quote">"Destaco a Andres Fornaris por su sólida capacidad técnica y su visión estratégica para alinear la arquitectura en la nube con los objetivos del negocio. Como líder, se caracteriza por su comunicación asertiva, cercanía y calidad humana."</p>
+          <div class="li-sep"></div>
+          <div class="li-author">
+            <div class="li-av">AM</div>
+            <div><div class="li-name">Ana Maria Maya</div><div class="li-role">Cloud Solutions Architect | AWS | AWS Certified SAA-C03</div><div class="li-rel">Reportaba a Andrés · Itera Process · Feb 2026</div></div>
+          </div>
+        </div>
+
+        <div class="li-card">
+          <p class="li-quote">"Un gran profesional, gran ser humano que destacó como líder, con gran acompañamiento y escucha a las necesidades del día a día. Se destaca en el amplio conocimiento de las diferentes nubes y apoyo cuando se requiere."</p>
+          <div class="li-sep"></div>
+          <div class="li-author">
+            <div class="li-av">DG</div>
+            <div><div class="li-name">Daniela Andrea Guevara Campos</div><div class="li-role">Ingeniera de Sistemas</div><div class="li-rel">Reportaba a Andrés · Itera Process · Feb 2026</div></div>
+          </div>
+        </div>
+
+        <div class="li-card">
+          <p class="li-quote">"Andres is a uniquely talented professional — he can do complex technical engineering work and at the same time manage and lead that work. His contribution in Andes Markets going live in AWS Cloud is extraordinary."</p>
+          <div class="li-sep"></div>
+          <div class="li-author">
+            <div class="li-av">YT</div>
+            <div><div class="li-name">Yoganandh Thirumalasetti</div><div class="li-role">Platform Architect · Liberty Mutual Insurance</div><div class="li-rel">Colega · Liberty Mutual · Jan 2025</div></div>
+          </div>
+        </div>
+
+        <div class="li-card">
+          <p class="li-quote">"Me complace recomendar a Andrés como un destacado profesional en DevOps. Destaco sus habilidades en CI/CD, infraestructura AWS, automatización con Python, y su excelente comunicación y colaboración en equipo."</p>
+          <div class="li-sep"></div>
+          <div class="li-author">
+            <div class="li-av">RG</div>
+            <div><div class="li-name">Ronny Gutierrez</div><div class="li-role">IT Manager · Director Arquitectura HDI Seguros Colombia</div><div class="li-rel">Director · HDI Seguros · Dic 2024</div></div>
+          </div>
+        </div>
+
+        <div class="li-card">
+          <p class="li-quote">"Arquitecto DevOps altamente competente y con talento. Su experiencia como desarrollador le da una perspectiva única para la automatización de infraestructuras, combinando habilidades técnicas y estratégicas para optimizar procesos."</p>
+          <div class="li-sep"></div>
+          <div class="li-author">
+            <div class="li-av">FA</div>
+            <div><div class="li-name">Fabian Stiven Avila Montaña</div><div class="li-role">DevSecOps | AWS Cloud Solutions Architect | CKA</div><div class="li-rel">Mismo equipo · HDI Seguros · Ene 2025</div></div>
+          </div>
+        </div>
+
+        <div class="li-card">
+          <p class="li-quote">"Puedo afirmar que es un experto en servicios de AWS. Su profundo conocimiento en la nube lo convierte en un recurso invaluable, siempre buscando agregar valor y entregar resultados de alta calidad."</p>
+          <div class="li-sep"></div>
+          <div class="li-author">
+            <div class="li-av">JV</div>
+            <div><div class="li-name">Jonathan A. Vega O.</div><div class="li-role">Cloud Solutions Architect | 2X AWS Certified | 4X Scrum</div><div class="li-rel">Mismo equipo · HDI Seguros · Dic 2024</div></div>
+          </div>
+        </div>
+
+        <div class="li-card">
+          <p class="li-quote">"Lo considero un gran profesional, con un seniority alto, muy integral, con grandes skills tanto duros como blandos. Resalto su capacidad de análisis, planeación y ejecución. Además lo valoro como una gran persona."</p>
+          <div class="li-sep"></div>
+          <div class="li-author">
+            <div class="li-av">JR</div>
+            <div><div class="li-name">Jose Romero Murillo</div><div class="li-role">Sr. Cloud Specialist | ML | GenAI | Migration Specialist</div><div class="li-rel">Externo · Dic 2024</div></div>
+          </div>
+        </div>
+
+        <div class="li-card">
+          <p class="li-quote">"Andrés es un tremendo profesional, con alto conocimiento como DevOps, proactivo, muy colaborador. No pasa desapercibido en los equipos, su forma de ser es muy participativa y profesional."</p>
+          <div class="li-sep"></div>
+          <div class="li-author">
+            <div class="li-av">CP</div>
+            <div><div class="li-name">Claudia Puchi Arriaza</div><div class="li-role">Scrum Master</div><div class="li-rel">Mismo equipo · HDI Seguros · Dic 2024</div></div>
+          </div>
+        </div>
+
+        <div class="li-card">
+          <p class="li-quote">"Es una persona que destaca por su liderazgo y su capacidad de resolución, además de su calidad como ser humano en brindar ayuda y ser colaborativo con todo el equipo que lo rodea."</p>
+          <div class="li-sep"></div>
+          <div class="li-author">
+            <div class="li-av">AC</div>
+            <div><div class="li-name">Anthony Camba Galarza</div><div class="li-role">Cloud Architect | DevOps | AWS x5 | Azure x1</div><div class="li-rel">Referente · HDI Seguros · Dic 2024</div></div>
+          </div>
+        </div>
+
+        <div class="li-card">
+          <p class="li-quote">"Ha demostrado ser un ingeniero DevOps excepcional en HDI Seguros Colombia. Su pasión por el desarrollo, la seguridad y la innovación es evidente en cada proyecto, integrando soluciones en AWS de manera eficiente y segura."</p>
+          <div class="li-sep"></div>
+          <div class="li-author">
+            <div class="li-av">MG</div>
+            <div><div class="li-name">Maria Gabriela Guerrero</div><div class="li-role">Desarrolladora Back-End | AWS | APIs Serverless | Node.js</div><div class="li-rel">Referente · HDI Seguros · Dic 2024</div></div>
+          </div>
+        </div>
+
+        <div class="li-card">
+          <p class="li-quote">"Excelente profesional y persona, se caracteriza por tener una amplia experiencia y conocimiento, muy comprometido en su trabajo y enfocado a los resultados. ¡Muy buen compañero!"</p>
+          <div class="li-sep"></div>
+          <div class="li-author">
+            <div class="li-av">EM</div>
+            <div><div class="li-name">Elkin Marin</div><div class="li-role">DevOps & Cloud Architect | AWS & Azure | CI/CD</div><div class="li-rel">Mismo equipo · HDI Seguros · Dic 2024</div></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    </div>
   </div>
 </section>
 
@@ -669,6 +818,7 @@ const T = {
     'rec-r0':'Colega · Colaborador profesional','rec-r1':'Dirección de Operaciones y Estrategia DevOps','rec-r2':'Chief Technology Officer (CTO)',
     'rec-c0':'Bogotá D.C. · Mar 2026','rec-c1':'Enero 2025','rec-c2':'Itera Process · Mar 2026',
     'rec-t2':'"Me complace recomendar a Andrés Fornaris, con quien trabajé de cerca durante su cargo como Cloud Architecture Manager en Itera Process. Andrés lideró una organización multidisciplinaria de más de 20 arquitectos, impulsando plataformas cloud modernas para múltiples clientes en LATAM. Su capacidad para combinar pensamiento arquitectónico estratégico con experiencia técnica hands-on le permitió acelerar la adopción cloud manteniendo sólidas prácticas de gobernanza y seguridad."',
+    'li-hdr':'Recomendaciones LinkedIn',
     'ct-tag':'06 · Contacto','ct-title':'Hablemos de tu <span class="hi">Próximo Proyecto</span>',
     'ct-sub':'Disponible para roles de arquitectura cloud, consultoría DevSecOps y liderazgo técnico en proyectos enterprise en LATAM y el mundo.',
     'btn-dl':'Descargar CV',
@@ -728,6 +878,7 @@ const T = {
     'rec-r0':'Colleague · Professional collaborator','rec-r1':'Head of Operations & DevOps Strategy','rec-r2':'Chief Technology Officer (CTO)',
     'rec-c0':'Bogotá D.C. · Mar 2026','rec-c1':'January 2025','rec-c2':'Itera Process · Mar 2026',
     'rec-t2':'"I am pleased to recommend Andrés Fornaris, with whom I worked closely during his tenure as Cloud Architecture Manager at Itera Process. Andrés led a multidisciplinary organization of more than 20 architects, driving the design and implementation of modern cloud platforms for multiple clients across Latin America. His ability to combine strategic architectural thinking with hands-on technical expertise allowed organizations to accelerate their cloud adoption while maintaining strong governance and security practices."',
+    'li-hdr':'LinkedIn Recommendations',
     'ct-tag':'06 · Contact','ct-title':'Let\'s Talk About Your <span class="hi">Next Project</span>',
     'ct-sub':'Available for cloud architecture roles, DevSecOps consulting, and technical leadership in enterprise projects across LATAM and globally.',
     'btn-dl':'Download CV',
