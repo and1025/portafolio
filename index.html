@@ -16,6 +16,26 @@ html { scroll-behavior: smooth; }
   --border: rgba(0,212,255,.1); --card: rgba(9,12,23,.85);
   --glow-c: 0 0 24px rgba(0,212,255,.25); --glow-p: 0 0 24px rgba(155,89,255,.25);
 }
+body.light {
+  --bg: #f0f4ff; --bg2: #e4ecf8; --cyan: #0077aa; --purple: #6b35c8;
+  --mint: #008a62; --amber: #b86800; --text: #0d1526; --muted: #4a5578;
+  --border: rgba(0,119,170,.18); --card: rgba(255,255,255,.88);
+  --glow-c: 0 0 24px rgba(0,119,170,.22); --glow-p: 0 0 24px rgba(107,53,200,.22);
+}
+body.light::before {
+  background-image: linear-gradient(rgba(0,119,170,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(0,119,170,.05) 1px,transparent 1px);
+}
+body.light nav { background:rgba(240,244,255,.9); border-bottom-color:var(--border); }
+body.light nav.scrolled { box-shadow:0 4px 32px rgba(0,0,0,.1); }
+body.light .mob-nav { background:rgba(240,244,255,.98); }
+body.light .hero-photo { background:linear-gradient(var(--bg),var(--bg)) padding-box, linear-gradient(135deg,var(--cyan),var(--purple)) border-box; box-shadow:0 0 50px rgba(0,119,170,.18),0 0 100px rgba(107,53,200,.1); }
+body.light .about-photo { background:linear-gradient(var(--bg2),var(--bg2)) padding-box, linear-gradient(135deg,var(--cyan),var(--purple)) border-box; }
+body.light .stats-bar { background:rgba(0,119,170,.04); }
+body.light .btn-grad { color:#fff; }
+body.light .btn-out { border-color:rgba(0,0,0,.18); color:var(--text); }
+body.light .btn-out:hover { border-color:var(--cyan); color:var(--cyan); }
+body.light .tbadge { background:rgba(0,0,0,.05); border-color:rgba(0,0,0,.1); color:var(--muted); }
+body.light .t-dot { border-color:var(--bg); }
 body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); overflow-x:hidden; line-height:1.6; }
 ::-webkit-scrollbar{width:5px} ::-webkit-scrollbar-track{background:var(--bg)} ::-webkit-scrollbar-thumb{background:linear-gradient(var(--cyan),var(--purple));border-radius:3px}
 #cnv { position:fixed; top:0; left:0; width:100%; height:100%; z-index:0; pointer-events:none; }
@@ -44,6 +64,12 @@ nav.scrolled { box-shadow:0 4px 32px rgba(0,0,0,.4); }
   font-size:.72rem; cursor:pointer; transition:all .2s; letter-spacing:1px; font-weight:600;
 }
 .lang-btn:hover { border-color:var(--cyan); color:var(--cyan); }
+.theme-btn {
+  background:transparent; border:1px solid var(--border); color:var(--muted);
+  width:32px; height:32px; border-radius:6px; cursor:pointer; transition:all .2s;
+  display:flex; align-items:center; justify-content:center; padding:0; flex-shrink:0;
+}
+.theme-btn:hover { border-color:var(--cyan); color:var(--cyan); }
 .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; }
 .hamburger span { display:block; width:22px; height:2px; background:var(--text); border-radius:2px; transition:.3s; }
 
@@ -245,6 +271,7 @@ footer { padding:28px 0; border-top:1px solid var(--border); text-align:center; 
       <li><button class="lang-btn" id="lang-btn" onclick="toggleLang()">EN</button></li>
     </ul>
     <div style="display:flex;align-items:center;gap:10px">
+      <button class="theme-btn" id="theme-btn" onclick="toggleTheme()" title="Toggle theme" aria-label="Toggle light/dark mode"><svg id="theme-icon" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
       <button class="lang-btn" id="lang-btn-mob" onclick="toggleLang()" style="display:none">EN</button>
       <div class="hamburger" onclick="toggleMob()"><span></span><span></span><span></span></div>
     </div>
@@ -909,6 +936,21 @@ const T = {
   }
 };
 
+/* ===== THEME SYSTEM ===== */
+const MOON_SVG = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+const SUN_SVG  = '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>';
+let isDark = localStorage.getItem('theme') !== 'light';
+
+function applyTheme(dark) {
+  isDark = dark;
+  document.body.classList.toggle('light', !dark);
+  const svg = dark ? MOON_SVG : SUN_SVG;
+  const ti=document.getElementById('theme-icon'); if(ti) ti.innerHTML=svg;
+  localStorage.setItem('theme', dark ? 'dark' : 'light');
+}
+
+function toggleTheme() { applyTheme(!isDark); }
+
 /* ===== LANG SYSTEM ===== */
 let lang = localStorage.getItem('lang') || 'es';
 let phrases = T[lang]._phrases;
@@ -949,10 +991,12 @@ function toggleLang() {
   init();
   (function draw(){
     ctx.clearRect(0,0,W,H);
-    pts.forEach(p=>{ p.x+=p.vx; p.y+=p.vy; if(p.x<0||p.x>W)p.vx*=-1; if(p.y<0||p.y>H)p.vy*=-1; ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fillStyle=`rgba(0,212,255,${p.a})`; ctx.fill(); });
+    const light=document.body.classList.contains('light');
+    const cr=light?'0,119,170':'0,212,255';
+    pts.forEach(p=>{ p.x+=p.vx; p.y+=p.vy; if(p.x<0||p.x>W)p.vx*=-1; if(p.y<0||p.y>H)p.vy*=-1; ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fillStyle=`rgba(${cr},${p.a*(light?.7:1)})`; ctx.fill(); });
     for(let i=0;i<pts.length;i++) for(let j=i+1;j<pts.length;j++){
       const dx=pts[i].x-pts[j].x, dy=pts[i].y-pts[j].y, d=Math.sqrt(dx*dx+dy*dy);
-      if(d<130){ ctx.beginPath(); ctx.moveTo(pts[i].x,pts[i].y); ctx.lineTo(pts[j].x,pts[j].y); ctx.strokeStyle=`rgba(0,212,255,${.07*(1-d/130)})`; ctx.lineWidth=.6; ctx.stroke(); }
+      if(d<130){ ctx.beginPath(); ctx.moveTo(pts[i].x,pts[i].y); ctx.lineTo(pts[j].x,pts[j].y); ctx.strokeStyle=`rgba(${cr},${(light?.05:.07)*(1-d/130)})`; ctx.lineWidth=.6; ctx.stroke(); }
     }
     requestAnimationFrame(draw);
   })();
@@ -1011,7 +1055,8 @@ document.querySelectorAll('.t-item').forEach((el,i)=>{ el.style.transitionDelay=
 document.querySelectorAll('.sk-cat').forEach((el,i)=>{ el.style.transitionDelay=(i*.07)+'s'; });
 document.querySelectorAll('.hi-card').forEach((el,i)=>{ el.style.transitionDelay=(i*.1)+'s'; });
 
-/* ===== INIT LANG ===== */
+/* ===== INIT ===== */
+applyTheme(isDark);
 applyLang(lang);
 </script>
 </body>
