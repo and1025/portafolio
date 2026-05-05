@@ -399,8 +399,12 @@ footer { padding:28px 0; border-top:1px solid var(--border); text-align:center; 
         <div class="tags"><span class="tag tc">Cloud Run</span><span class="tag tc">Cloud Functions</span><span class="tag tc">GKE</span><span class="tag tc">Composer</span><span class="tag tc">BigQuery</span><span class="tag tc">VPC</span><span class="tag tc">Pub/Sub</span><span class="tag tc">IAM</span><span class="tag tc">Cloud Storage</span><span class="tag tc">Apigee X</span><span class="tag tc">Cloud Spanner</span></div>
       </div>
       <div class="sk-cat fi">
-        <div class="sk-hdr"><div class="sk-ico" style="background:rgba(0,120,215,.12)">🔷</div><span class="sk-name" style="color:var(--purple)">Azure & DevOps</span></div>
-        <div class="tags"><span class="tag tp">Azure VMs</span><span class="tag tp">Azure Networking</span><span class="tag tp">Azure DevOps</span><span class="tag tp">Azure OpenAI Service</span><span class="tag tp">Azure AI Studio</span><span class="tag tp">Azure Machine Learning</span><span class="tag tp">Azure AI Foundry</span><span class="tag tp">Jenkins CI/CD</span><span class="tag tp">GitHub Actions</span><span class="tag tp">Terraform</span><span class="tag tp">CloudFormation</span><span class="tag tp">Sonarqube</span><span class="tag tp">CircleCI</span><span class="tag tp">Acquia Cloud</span></div>
+        <div class="sk-hdr"><div class="sk-ico" style="background:rgba(0,120,215,.12)">🔷</div><span class="sk-name" style="color:var(--purple)">Microsoft Azure</span></div>
+        <div class="tags"><span class="tag tp">Azure VMs</span><span class="tag tp">Azure Networking</span><span class="tag tp">Azure DevOps</span><span class="tag tp">Azure OpenAI Service</span><span class="tag tp">Azure AI Studio</span><span class="tag tp">Azure Machine Learning</span><span class="tag tp">Azure AI Foundry</span></div>
+      </div>
+      <div class="sk-cat fi">
+        <div class="sk-hdr"><div class="sk-ico" style="background:rgba(155,89,255,.12)">⚙️</div><span class="sk-name" id="sk-cicd-name" style="color:var(--purple)">DevOps & CI/CD</span></div>
+        <div class="tags"><span class="tag tp">Jenkins CI/CD</span><span class="tag tp">GitHub Actions</span><span class="tag tp">Terraform</span><span class="tag tp">CloudFormation</span><span class="tag tp">Sonarqube</span><span class="tag tp">CircleCI</span><span class="tag tp">Acquia Cloud</span><span class="tag tp">ArgoCD</span><span class="tag tp">Argo Rollouts</span></div>
       </div>
       <div class="sk-cat fi">
         <div class="sk-hdr"><div class="sk-ico" style="background:rgba(255,107,53,.12)">🔐</div><span class="sk-name" id="sk-sec-name" style="color:#ff6b35">Seguridad & Gobernanza</span></div>
@@ -412,7 +416,7 @@ footer { padding:28px 0; border-top:1px solid var(--border); text-align:center; 
       </div>
       <div class="sk-cat fi">
         <div class="sk-hdr"><div class="sk-ico" style="background:rgba(155,89,255,.12)">💻</div><span class="sk-name" id="sk-be-name" style="color:var(--purple)">Backend & Desarrollo</span></div>
-        <div class="tags"><span class="tag tp">Node.js</span><span class="tag tp">Python</span><span class="tag tp">JavaScript</span><span class="tag tp">Java EE / Spring</span><span class="tag tp">.NET / C#</span><span class="tag tp">React</span><span class="tag tp">Angular</span><span class="tag tp">Docker</span><span class="tag tp">Kubernetes</span><span class="tag tp">ArgoCD</span><span class="tag tp">Argo Rollouts</span><span class="tag tp">Argo Suite</span><span class="tag tp">Microservicios</span><span class="tag tp">RabbitMQ</span><span class="tag tp">GraphQL</span><span class="tag tp">Ionic</span><span class="tag tp">Blockchain / EVM</span></div>
+        <div class="tags"><span class="tag tp">Node.js</span><span class="tag tp">Python</span><span class="tag tp">JavaScript</span><span class="tag tp">Java EE / Spring</span><span class="tag tp">.NET / C#</span><span class="tag tp">React</span><span class="tag tp">Angular</span><span class="tag tp">Docker</span><span class="tag tp">Kubernetes</span><span class="tag tp">Microservicios</span><span class="tag tp">RabbitMQ</span><span class="tag tp">GraphQL</span><span class="tag tp">Ionic</span><span class="tag tp">Blockchain / EVM</span></div>
       </div>
       <div class="sk-cat fi">
         <div class="sk-hdr"><div class="sk-ico" style="background:rgba(0,212,255,.1)">🤖</div><span class="sk-name" id="sk-ai-name" style="color:var(--cyan)">IA & Integraciones</span></div>
@@ -859,7 +863,7 @@ const T = {
     'hi-t4':'IA & Automatización Inteligente','hi-d4':'Integraciones con modelos de IA generativa (Bedrock, OpenAI), automatización de flujos con Slack, Webhooks y pipelines inteligentes sobre AWS.',
     'sk-tag':'02 · Stack Técnico','sk-title':'Tecnologías & <span class="hi">Expertise</span>',
     'sk-sub':'Dominio multi-nube con enfoque en seguridad, escalabilidad y gobierno enterprise',
-    'sk-sec-name':'Seguridad & Gobernanza','sk-obs-name':'Observabilidad & SRE','sk-be-name':'Backend & Desarrollo','sk-ai-name':'IA & Integraciones','sk-dg-name':'Gobernanza de Datos · DAMA','dora-tag':'Métricas DORA',
+    'sk-sec-name':'Seguridad & Gobernanza','sk-obs-name':'Observabilidad & SRE','sk-be-name':'Backend & Desarrollo','sk-ai-name':'IA & Integraciones','sk-dg-name':'Gobernanza de Datos · DAMA','sk-cicd-name':'DevOps & CI/CD','dora-tag':'Métricas DORA',
     'exp-tag':'03 · Trayectoria','exp-title':'Experiencia <span class="hi">Profesional</span>',
     'exp-sub':'10+ años construyendo infraestructuras cloud críticas en LATAM y el mundo',
     'er0':'Consultor Senior DevOps Engineer','ep0':'ABR 2025 — Actualidad',
@@ -920,7 +924,7 @@ const T = {
     'hi-t4':'AI & Intelligent Automation','hi-d4':'Integrations with generative AI models (Bedrock, OpenAI), workflow automation via Slack, Webhooks, and intelligent pipelines on AWS.',
     'sk-tag':'02 · Tech Stack','sk-title':'Technologies & <span class="hi">Expertise</span>',
     'sk-sub':'Multi-cloud expertise focused on enterprise security, scalability, and governance',
-    'sk-sec-name':'Security & Governance','sk-obs-name':'Observability & SRE','sk-be-name':'Backend & Development','sk-ai-name':'AI & Integrations','sk-dg-name':'Data Governance · DAMA','dora-tag':'DORA Metrics',
+    'sk-sec-name':'Security & Governance','sk-obs-name':'Observability & SRE','sk-be-name':'Backend & Development','sk-ai-name':'AI & Integrations','sk-dg-name':'Data Governance · DAMA','sk-cicd-name':'DevOps & CI/CD','dora-tag':'DORA Metrics',
     'exp-tag':'03 · Career','exp-title':'Professional <span class="hi">Experience</span>',
     'exp-sub':'10+ years building critical cloud infrastructure in LATAM and globally',
     'er0':'Senior DevOps Engineer Consultant','ep0':'APR 2025 — Present',
