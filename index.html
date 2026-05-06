@@ -1089,6 +1089,25 @@ document.querySelectorAll('.hi-card').forEach((el,i)=>{ el.style.transitionDelay
 /* ===== INIT ===== */
 applyTheme(isDark);
 applyLang(lang);
+
+/* ===== CV DOWNLOAD BLOCKED (temporal) ===== */
+(function(){
+  const msg = { es: 'CV en actualización, disponible pronto.', en: 'CV being updated, available soon.' };
+  ['dl-hero','dl-contact'].forEach(function(id){
+    var a = document.getElementById(id);
+    if(!a) return;
+    a.removeAttribute('download');
+    a.href = '#';
+    a.style.opacity = '0.5';
+    a.style.cursor = 'not-allowed';
+    a.style.pointerEvents = 'auto';
+    a.addEventListener('click', function(e){
+      e.preventDefault();
+      var l = localStorage.getItem('lang') || 'es';
+      alert(msg[l] || msg.es);
+    });
+  });
+})();
 </script>
 </body>
 </html>
